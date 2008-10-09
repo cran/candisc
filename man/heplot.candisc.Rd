@@ -12,10 +12,10 @@ in the space of maximum discrimination.
 }
 \usage{
 \method{heplot}{candisc}(mod, which = 1:2, scale, asp = 1, var.col = "blue", 
-    var.lwd = par("lwd"), prefix = "Can", terms = mod$term, ...)
+    var.lwd = par("lwd"), prefix = "Can", suffix = TRUE, terms = mod$term, ...)
 
-\method{heplot3d}{candisc}(mod, which = 1:3, scale, var.col = "blue", 
-    prefix = "Can", terms = mod$term, 
+\method{heplot3d}{candisc}(mod, which = 1:3, scale, var.col = "blue", var.lwd=par("lwd"),
+    prefix = "Can", suffix = FALSE, terms = mod$term, 
     ...) 
 }
     
@@ -34,6 +34,8 @@ in the space of maximum discrimination.
   \item{var.col}{ Color for variable vectors and labels }
   \item{var.lwd}{ Line width for variable vectors }
   \item{prefix}{ Prefix for labels of canonical dimensions.}
+  \item{suffix}{ Suffix for labels of canonical dimensions. If \code{suffix=TRUE}
+  the percent of hypothesis (H) variance accounted for by each canonical dimension is added to the axis label.}
   \item{terms}{ Terms  from the original \code{mlm} whose H ellipses
   are to be plotted in canonical space.  The default is the one term for
   which the canonical scores were computed.  If \code{terms=TRUE},
@@ -58,7 +60,7 @@ No useful value; used for the side-effect of producing a canonical HE plot.
 Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear Models: SAS Software and Examples Journal of Statistical Software, 17(6), 1-42. \url{http://www.jstatsoft.org/v17/i06/} 
 
 Friendly, M. (2007). HE plots for Multivariate General Linear Models. Journal of Computational and Graphical Statistics, 16 (2), 421-444. 
-\url{http://www.math.yorku.ca/SCS/Papers/heplots.pdf} 
+\url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
 
 }
 \author{ Michael Friendly and John Fox }
@@ -78,6 +80,16 @@ heplot(grass.canL, terms=TRUE, ask=FALSE)
 
 # NB: aspect3d not set for equal scaling in this plot 
 heplot3d(grass.can1)
+# change to equal scaling, so E ellipsoid is spherical
+aspect3d("iso")
+
+## Pottery data, from car package
+pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
+(pottery.can <-candisc(pottery.mod))
+
+heplot(pottery.can, var.lwd=3)
+heplot3d(pottery.can, scale=12)
+aspect3d("iso")
 
 }
 \keyword{multivariate}

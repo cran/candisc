@@ -37,9 +37,9 @@
 Gittins, R. (1985), Canonical Analysis: A Review with Applications in Ecology,
     Berlin: Springer-Verlag, Table A-5.
 }
-\references{
+%\references{
+%}
 
-}
 \examples{
 str(Grass)
 grass.mod <- lm(cbind(N1,N9,N27,N81,N243) ~ Block + Species, data=Grass)

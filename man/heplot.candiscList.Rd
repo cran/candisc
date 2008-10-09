@@ -13,9 +13,9 @@ in the space of maximum discrimination.
 }
 
 \usage{
-\method{heplot}{candiscList}(mod, term, ask = interactive(), ...)
+\method{heplot}{candiscList}(mod, term, ask = interactive(), graphics = TRUE, ...)
 
-\method{heplot3d}{candiscList}(mod, term, ask = interactive(), ...)
+\method{heplot3d}{candiscList}(mod, term, ask = interactive(), graphics = TRUE, ...)
 }
 
 \arguments{
@@ -25,11 +25,12 @@ in the space of maximum discrimination.
   plot is produced for each term in the \code{mlm} object.}
   \item{ask}{If \code{TRUE} (the default), a menu of  terms is presented; if ask is FALSE, 
   canonical HE plots for all  terms are produced.}
+ \item{graphics} {if \code{TRUE} (the default, when running interactively), then the menu of terms to plot is presented in a dialog box rather than as a text menu.}
   \item{\dots}{ Arguments to be passed down }
 }
 
-\details{
-}
+%\details{
+%}
 
 \value{
 No useful value; used for the side-effect of producing canonical HE plots.
@@ -38,20 +39,19 @@ No useful value; used for the side-effect of producing canonical HE plots.
 \references{ 
 Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear Models: SAS Software and Examples Journal of Statistical Software, 17(6), 1-42. \url{http://www.jstatsoft.org/v17/i06/} 
 
-Friendly, M. (2007). HE plots for Multivariate General Linear Models. Journal of Computational and Graphical Statistics, 16 (2), 421-444. 
-
-\url{http://www.math.yorku.ca/SCS/Papers/heplots.pdf} 
+Friendly, M. (2007).   HE plots for Multivariate General Linear Models.
+  \emph{Journal of Computational and Graphical Statistics}, 16(2) 421-444.
+  \url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
  }
  
 \author{ Michael Friendly and John Fox }
-\note{ ~~further notes~~ 
-
-}
+%\note{ ~~further notes~~ 
+%}
 \seealso{ \code{\link{candisc}}, \code{\link{candiscList}}, \code{\link[heplots]{heplot}}, 
     \code{\link[heplots]{heplot3d}}}
     
-\examples{
-}
+%\examples{
+%}
 
 \keyword{multivariate}
 \keyword{hplot}

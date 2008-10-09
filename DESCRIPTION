@@ -1,8 +1,8 @@
 Package: candisc
 Type: Package
 Title: Generalized Canonical Discriminant Analysis
-Version: 0.5-9
-Date: 2008-04-14
+Version: 0.5-10
+Date: 2008-10-9
 Depends: car, heplots, graphics, stats 
 Suggests: rgl
 LazyLoad: yes
@@ -12,4 +12,5 @@ Maintainer: John Fox <jfox@mcmaster.ca>
 Description: Functions for computing and graphing canonical discriminant
     analyses.
 License: GPL (>= 2)
-Packaged: Mon Apr 14 08:47:44 2008; John Fox
+Revision: 6
+Packaged: Sun Nov  9 04:52:31 2008; theussl

@@ -10,17 +10,17 @@ This package includes functions for computing and visualizing
 generalized canonical
 discriminant analyses for a multivariate linear model.
 They are designed to provide low-rank visualizations of
-terms in a \code{mlm} via the \code{plot} method and the \pkg{heplots}.
+terms in a \code{mlm} via the \code{plot} method and the \pkg{heplots} package.
 }
 \details{
 \tabular{ll}{
 Package: \tab candisc\cr
 Type: \tab Package\cr
-Version: \tab 0.5-9\cr
-Date: \tab 2008-04-14\cr
+Version: \tab 0.5-10\cr
+Date: \tab 2008-11-5\cr
 License: \tab GPL (>= 2)\cr
 }
-The organization of functions in this package and the \pkg{heplots}
+The organization of functions in this package and the \pkg{heplots} package
 may change in a later version.
 }
 

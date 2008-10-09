@@ -18,6 +18,12 @@
 # last revised: 11 April 2008 by J. Fox
 # -- changed default for ask argument of heplot3d.candiscList to interactive() 
 
+# last revised: 10/8/2008 9:31PM by MF
+# -- added var.lwd to heplot3d.candisc
+# -- changed rgl.* to *3d functions
+# last revised: 11/5/2008 by MF
+# -- added sufix= to heplot.candisc and heplot3d.candisc
+
 ## TODO:
 
 heplot.candisc <- function (
@@ -28,6 +34,7 @@ heplot.candisc <- function (
 	var.col="blue",  # color for variable vectors and labels
 	var.lwd=par("lwd"),
 	prefix = "Can",  # prefix for labels of canonical dimensions
+	suffix = TRUE,   # add label suffix with can % ?
 	terms=mod$term,  # terms to be plotted in canonical space / TRUE=all
 	...              # extra args passed to heplot
 	) {
@@ -43,7 +50,9 @@ heplot.candisc <- function (
 	term <- mod$term                        # term for which candisc was done
 	lm.terms <- mod$terms                   # terms in original lm
 	canvar <- paste('Can', which, sep="")   # names of canonical variables to plot
-	canlab <- paste(prefix, which, " (", round(mod$pct[which],1), "%)", sep="")
+	if (is.logical(suffix) & suffix)
+		suffix <- paste( " (", round(mod$pct[which],1), "%)", sep="" ) else suffix <- NULL
+	canlab <- paste(prefix, which, suffix, sep="")
 	scores <- mod$scores
 
 ##   Construct the model formula to fit mod$scores ~ terms in original lm()
@@ -98,7 +107,9 @@ heplot3d.candisc <- function (
 	which=1:3,  # canonical dimensions to plot
 	scale,       # scale factor for variable vectors in can space
 	var.col="blue",
+	var.lwd=par("lwd"),
 	prefix = "Can",  # prefix for labels of canonical dimensions
+	suffix = FALSE,   # add label suffix with can % ?
 	terms=mod$term,  # terms to be plotted in canonical space / TRUE=all
 	...         # extra args passed to heplot3d
 	) {
@@ -106,9 +117,11 @@ heplot3d.candisc <- function (
 #	factors <- mod$factors                  # factor variable(s) from candisc
 	term <- mod$term                        # term for which candisc was done
 	lm.terms <- mod$terms                   # terms in original lm
-	canvar <- paste('Can', which, sep="")   # names of canonical variables to plot
+#	canvar <- paste('Can', which, sep="")   # names of canonical variables to plot
 	# maybe the canlab labels are too long for the plot?
-	canlab <- paste(prefix, which, " (", round(mod$pct[which],1), "%)", sep="")
+	if (is.logical(suffix) & suffix)
+		suffix <- paste( " (", round(mod$pct[which],1), "%)", sep="" ) else suffix <- NULL
+	canlab <- paste(prefix, which, suffix, sep="")
 	scores <- mod$scores
 	# fit can.mod for the canonical scores
   txt <- paste( "lm( cbind(",
@@ -133,20 +146,25 @@ heplot3d.candisc <- function (
     bbox <- matrix(par3d("bbox"),3,2,byrow=TRUE)
 #    TODO: calculate scale so that vectors reasonably fill the plot
 		scale <- 5
+		cat("Vector scale factor set to ", scale, "\n")
 #	  browser()
 	}
   cs <- scale * mod$structure
   #  can this be simplified?
   for(i in 1:nrow(mod$structure)) {
-  	rgl.lines( c(0, cs[i,1]),
-  	           c(0, cs[i,2]),
-  	           c(0, cs[i,3]), col=var.col)
+#  	rgl.lines( c(0, cs[i,1]),
+#  	           c(0, cs[i,2]),
+#  	           c(0, cs[i,3]), col=var.col)
+  	lines3d( c(0, cs[i,1]),
+  	         c(0, cs[i,2]),
+  	         c(0, cs[i,3]), col=var.col, lwd=var.lwd)
   }
-  rgl.texts( cs, text=rownames(cs), col=var.col)
+#  rgl.texts( cs, text=rownames(cs), col=var.col)
+  texts3d( cs, text=rownames(cs), col=var.col)
 
 }
 
-heplot.candiscList <- function(mod, term, ask=interactive(), ...) {
+heplot.candiscList <- function(mod, term, ask=interactive(), graphics = TRUE, ...) {
     if (!missing(term)){
         if (is.character(term)) term <- gsub(" ", "", term)
         heplot(mod[[term]], ...)
@@ -155,7 +173,7 @@ heplot.candiscList <- function(mod, term, ask=interactive(), ...) {
     terms <- names(mod)
     if (ask){
         repeat {
-            selection <- menu(terms)
+            selection <- menu(terms, graphics = graphics, title = "Select term to plot")
             if (selection == 0) break
             else {
               if (mod[[selection]]$ndim >1) heplot(mod[[selection]], ...)
@@ -171,7 +189,7 @@ heplot.candiscList <- function(mod, term, ask=interactive(), ...) {
         }
 }
 
-heplot3d.candiscList <- function(mod, term, ask=interactive(), ...) {
+heplot3d.candiscList <- function(mod, term, ask=interactive(), graphics = TRUE, ...) {
     if (!missing(term)){
         if (is.character(term)) term <- gsub(" ", "", term)
         heplot3d(mod[[term]], ...)
@@ -180,7 +198,7 @@ heplot3d.candiscList <- function(mod, term, ask=interactive(), ...) {
     terms <- names(mod)
     if (ask){
         repeat {
-            selection <- menu(terms)
+            selection <- menu(terms, graphics = graphics, title = "Select term to plot")
             if (selection == 0) break
             else heplot3d(mod[[selection]], ...)
             }
