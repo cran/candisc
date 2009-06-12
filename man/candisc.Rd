@@ -26,7 +26,8 @@ candisc(mod, ...)
 \method{coef}{candisc}(object, type = c("std", "raw", "structure"), ...)
 
 \method{plot}{candisc}(x, which = 1:2, conf = 0.95, col, pch, scale, asp = 1,
-    var.col = "blue", var.lwd = par("lwd"), prefix = "Can", suffix=TRUE, ...)
+    var.col = "blue", var.lwd = par("lwd"), prefix = "Can", suffix=TRUE, 
+    titles.1d = c("Canonical scores", "Structure"), ...)
     
 \method{print}{candisc}(x, digits=max(getOption("digits") - 2, 3), ...)
 
@@ -48,7 +49,9 @@ candisc(mod, ...)
   \item{object, x}{A candisc object}
   \item{which}{A vector of two integers, selecting the canonical dimensions to plot}
   \item{conf}{Confidence coefficient for the confidence circles plotted in the \code{plot} method}
-  \item{col}{A vector of colors to be used for the levels of the term in the \code{plot} method}
+  \item{col}{A vector of colors to be used for the levels of the term in the \code{plot} method.
+  In this version, you should assign colors and point symbols explicitly, rather than relying on
+  the somewhat arbitrary defaults.}
   \item{pch}{A vector of point symbols to be used for the levels of the term in the \code{plot} method}
   \item{scale}{Scale factor for the variable vectors in canonical space.  If not specified, a scale
   factor is calculated to make the variable vectors approximately fill the plot space. }
@@ -60,6 +63,8 @@ candisc(mod, ...)
   \item{prefix}{Prefix used to label the canonical dimensions plotted}
   \item{suffix}{Suffix for labels of canonical dimensions. If \code{suffix=TRUE}
   the percent of hypothesis (H) variance accounted for by each canonical dimension is added to the axis label.}
+  \item{titles.1d}{A character vector of length 2, containing titles for the panels used to plot the
+  canonical scores and structure vectors, for the case in which there is only one canonical dimension.}
   \item{means}{Logical value used to determine if canonical means are printed}
   \item{scores}{Logical value used to determine if canonical scores are printed}
   \item{coef}{Type of coefficients printed by the summary method. Any one or more of
@@ -139,7 +144,10 @@ heplot(grass.can1, scale=6)
 # iris data
 iris.mod <- lm(cbind(Petal.Length, Sepal.Length, Petal.Width, Sepal.Width) ~ Species, data=iris)
 iris.can <- candisc(iris.mod, data=iris)
-plot(iris.can)
+#-- assign colors and symbols corresponding to species
+col <- rep(c("red", "black", "blue"), each=50)
+pch <- rep(1:3, each=50)
+plot(iris.can, col=col, pch=pch)
 
 heplot(iris.can)
 

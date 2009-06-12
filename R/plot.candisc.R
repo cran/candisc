@@ -22,6 +22,7 @@ plot.candisc <- function (
 	var.lwd=par("lwd"),
 	prefix = "Can",  # prefix for labels of canonical dimensions
 	suffix = TRUE,   # add label suffix with can % ?
+	titles.1d = c("Canonical scores", "Structure"),
 	...         # extra args passed to plot
 ) {
 	
@@ -39,10 +40,10 @@ plot.candisc <- function (
 		layout(matrix(c(1,2),1,2), widths=wid)
 		formule <- formula( paste("Can1 ~", term, sep="") )
 		par(mar=c(5,4,4,0)+.1)
-		boxplot(formule, data=x$scores, ylab=paste(prefix, "1", sep=""), xlab=term, main="Canonical scores")
+		boxplot(formule, data=x$scores, ylab=paste(prefix, "1", sep=""), xlab=term, main=titles.1d[1])
 		xx <- 1:ns
 		par(mar=c(5,0,4,1)+.1)
-		plot(xx, structure, type="n", ylab="", xlab="", xaxt="n", yaxt="n", main="Structure")
+		plot(xx, structure, type="n", ylab="", xlab="", xaxt="n", yaxt="n", main=titles.1d[2])
 		arrows(xx, 0, xx, structure, length=.1, 	angle=15,
 			col=var.col, lwd=var.lwd )		
 		vars <- rownames(x$structure)
@@ -62,7 +63,7 @@ plot.candisc <- function (
 	canlab <- paste(prefix, which, suffix, sep="")
 	
 	nlev <- nrow(x$means)                 # number of groups
-	# can we be more clever about assigning default col & pch by taking the
+	# TODO: can we be more clever about assigning default col & pch by taking the
 	# structure of x$factors into account?
 	if (missing(col)) col <- rep(palette(), length.out=nlev)
 	if (missing(pch)) pch <- rep(1:18, length.out=nlev)
@@ -73,6 +74,8 @@ plot.candisc <- function (
 	structure <- x$structure[,which]
 	
 	# use asp=1 to make the plot equally scaled
+#	Ind <- dataIndex(scores,term)
+#	plot(scores, asp=asp, xlab=canlab[1], ylab=canlab[2], col=col[Ind], pch=pch[Ind], ...) 
 	plot(scores, asp=asp, xlab=canlab[1], ylab=canlab[2], col=col, pch=pch, ...) 
 	points(means[,1], means[,2], col=col, pch="+", cex=2)
 	pos <- ifelse(means[,2]>0, 3, 1)
