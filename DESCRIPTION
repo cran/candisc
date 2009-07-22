@@ -1,9 +1,9 @@
 Package: candisc
 Type: Package
 Title: Generalized Canonical Discriminant Analysis
-Version: 0.5-15
-Date: 2009-6-12
-Depends: car, heplots (>= 0.8-3), graphics, stats
+Version: 0.5-16
+Date: 2009-7-22
+Depends: car, heplots (>= 0.8-6), graphics, stats
 Suggests: rgl
 LazyLoad: yes
 LazyData: yes
@@ -14,6 +14,6 @@ Description: Functions for computing and graphing canonical
 License: GPL (>= 2)
 Repository: CRAN
 Repository/R-Forge/Project: candisc
-Repository/R-Forge/Revision: 24
-Date/Publication: 2009-06-14 19:07:50
-Packaged: 2009-06-14 03:19:43 UTC; rforge
+Repository/R-Forge/Revision: 26
+Date/Publication: 2009-11-19 13:00:38
+Packaged: 2009-08-03 20:45:08 UTC; rforge
