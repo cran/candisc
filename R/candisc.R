@@ -8,6 +8,8 @@
 # -- fixed candisc.mlm bug for 1 factor designs
 # -- moved plot.candisc to its own file
 # -- plot.candisc: added boxplot of canonical scores when ndim==1 
+# Now refer to car:::predictor.names for car_2.0
+# Now just copy predictor.names from car to avoid namespace problem
 
 ## ----------------------------------------------------------------------------
 # Provides:
@@ -17,6 +19,15 @@
 ## ----------------------------------------------------------------------------
 ## canonical scores and vectors from an mlm object
 ## TODO: provide a data.frame / formula method
+
+predictor.names <- function(model, ...) {
+	UseMethod("predictor.names")
+}
+
+predictor.names.default <- function(model, ...){
+	predictors <- attr(terms(model), "variables")
+	as.character(predictors[3:length(predictors)])
+}
 
 candisc <-
 function(mod, ...) UseMethod("candisc")
@@ -46,8 +57,8 @@ candisc.mlm <- function(mod, term, type="2", manova, ndim=rank, ...) {
   eInv <- solve(Tm)
   eHe <- t(eInv) %*% H %*% eInv
   dc <- eigen(eHe, symmetric=TRUE)
-	rank <- min(dfh, sum(dc$values>0))
-	pct <- 100 * dc$values / sum(dc$values)
+  rank <- min(dfh, sum(dc$values>0))
+  pct <- 100 * dc$values / sum(dc$values)
 
   coeffs.raw <- eInv %*% dc$vectors * sqrt(dfe)
 	# should we drop the coeffs corresponding to 0 eigenvalues here or at the end?
@@ -105,15 +116,15 @@ candisc.mlm <- function(mod, term, type="2", manova, ndim=rank, ...) {
 # print method for candisc objects
 
 print.candisc <- function( x, digits=max(getOption("digits") - 2, 3), ...) {
-		table <- canrsqTable(x)
+	table <- canrsqTable(x)
     cat(paste("\nCanonical Discriminant Analysis for ", x$term, ":\n\n", sep=""))
     print(table, digits=digits,na.print = "")
 
-		rank <- x$rank
+	rank <- x$rank
     eigs <- x$eigenvalues[1:rank]
     tests <- seqWilks(eigs, rank, x$dfh, x$dfe)
     tests <- structure(as.data.frame(tests), 
-        heading = paste("\nTest of H0: The canonical correlations in the",
+    heading <- paste("\nTest of H0: The canonical correlations in the",
                         "\ncurrent row and all that follow are zero\n") , 
         class = c("anova", "data.frame"))
     print(tests)
