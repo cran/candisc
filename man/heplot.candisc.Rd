@@ -69,8 +69,10 @@ No useful value; used for the side-effect of producing a canonical HE plot.
 \references{ 
 Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear Models: SAS Software and Examples Journal of Statistical Software, 17(6), 1-42. \url{http://www.jstatsoft.org/v17/i06/} 
 
-Friendly, M. (2007). HE plots for Multivariate General Linear Models. Journal of Computational and Graphical Statistics, 16 (2), 421-444. 
-\url{http://www.math.yorku.ca/SCS/Papers/jcgs-heplots.pdf} 
+Friendly, M. (2007).
+  HE plots for Multivariate General Linear Models.
+  \emph{Journal of Computational and Graphical Statistics}, \bold{16}(2) 421--444.
+  \url{http://datavis.ca/papers/jcgs-heplots.pdf} 
 
 }
 \author{ Michael Friendly and John Fox }
@@ -88,7 +90,7 @@ heplot(grass.can1, scale=6)
 heplot(grass.can1, scale=6, terms=TRUE)
 heplot(grass.canL, terms=TRUE, ask=FALSE)
 
-heplot3d(grass.can1)
+heplot3d(grass.can1, wire=FALSE)
 # compare with non-iso scaling
 aspect3d(x=1,y=1,z=1)
 # or,
@@ -100,7 +102,7 @@ pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
 pottery.can <-candisc(pottery.mod)
 
 heplot(pottery.can, var.lwd=3)
-heplot3d(pottery.can, var.lwd=3, scale=10, zlim=c(-3,3))
+heplot3d(pottery.can, var.lwd=3, scale=10, zlim=c(-3,3), wire=FALSE)
 
 \dontrun{ 
 play3d(spin3d(axis = c(1, 0, 0), rpm = 5), duration=12)
