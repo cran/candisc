@@ -26,7 +26,9 @@
 # last revised: 11/12/2008 by MF
 # -- added asp= to heplot3d.candisc
 
-## TODO:
+# last revised: 5/17/2012 9:41AM by MF
+# -- now use plot.candisc for a 1 df term
+# heplot.candisc now returns ellipses
 
 heplot.candisc <- function (
 	mod,		         # output object from candisc
@@ -43,19 +45,16 @@ heplot.candisc <- function (
 	) {
 
   if (!inherits(mod, "candisc")) stop("Not a candisc object")
-# using stop() here would terminate heplot.candiscList
-	if (mod$ndim < 2) {
-	   warning("Can't do a 1 dimensional HE plot")
+	if (mod$ndim < 2 || length(which)==1) {
+		# using stop() here would terminate heplot.candiscList
+	   message("Can't do a 1 dimensional canonical HE plot; using plot.candisc instead")
+	   plot(mod, which=which, var.col=var.col, var.lwd=var.lwd, prefix=prefix, suffix=suffix, ...) 
 	   return()
 	}
 
 	factors <- mod$factors                  # factor variable(s) from candisc
 	term <- mod$term                        # term for which candisc was done
 	lm.terms <- mod$terms                   # terms in original lm
-	canvar <- paste('Can', which, sep="")   # names of canonical variables to plot
-	if (is.logical(suffix) & suffix)
-		suffix <- paste( " (", round(mod$pct[which],1), "%)", sep="" ) else suffix <- NULL
-	canlab <- paste(prefix, which, suffix, sep="")
 	scores <- mod$scores
 
 ##   Construct the model formula to fit mod$scores ~ terms in original lm()
@@ -66,6 +65,12 @@ heplot.candisc <- function (
               ") ~ ",
               paste( lm.terms, collapse = "+"), ", data=scores)" )
   can.mod <- eval(parse(text=txt))
+
+##   Construct labels for canonical variables
+	canvar <- paste('Can', which, sep="")   # names of canonical variables to plot
+	if (is.logical(suffix) & suffix)
+		suffix <- paste( " (", round(mod$pct[which],1), "%)", sep="" ) else suffix <- NULL
+	canlab <- paste(prefix, which, suffix, sep="")
 
 	# Get H, E ellipses for the canonical scores
 	# Allow to select the H terms to be plotted.
@@ -90,12 +95,15 @@ heplot.candisc <- function (
 		scale <- floor(  0.9 * ellmax / vecmax )
 		cat("Vector scale factor set to ", scale, "\n")
 	}
-	cs <- scale * structure
-	arrows(0, 0, cs[,1], cs[,2], length=.1, angle=15, col=var.col, lwd=var.lwd)
+
+  # TODO: replace with a call to vectors()
+  cs <- scale * structure
+  arrows(0, 0, cs[,1], cs[,2], length=.1, angle=15, col=var.col, lwd=var.lwd)
   vars <- rownames(structure)
   pos<-ifelse(cs[,1]>0, 4, 2)
   text(cs[,1], cs[,2], vars, pos=pos,  col=var.col, cex=var.cex)
 
+  invisible(ellipses)
 }
 
 ## heplot3d method for candisc object
@@ -159,17 +167,16 @@ heplot3d.candisc <- function (
   cs <- scale * mod$structure
   #  can this be simplified?
   for(i in 1:nrow(mod$structure)) {
-#  	rgl.lines( c(0, cs[i,1]),
-#  	           c(0, cs[i,2]),
-#  	           c(0, cs[i,3]), col=var.col)
   	lines3d( c(0, cs[i,1]),
   	         c(0, cs[i,2]),
   	         c(0, cs[i,3]), col=var.col, lwd=var.lwd)
   }
 #  rgl.texts( cs, text=rownames(cs), col=var.col)
-  texts3d( cs, text=rownames(cs), col=var.col, cex=var.cex)
+  texts3d( cs, texts=rownames(cs), col=var.col, cex=var.cex)
 
   if (!is.null(asp)) aspect3d(asp)
+  
+  invisible(ellipses)
 }
 
 heplot.candiscList <- function(mod, term, ask=interactive(), graphics = TRUE, ...) {
