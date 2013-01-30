@@ -1,3 +1,10 @@
+Version 0.6-2 (2013-01-30)
+o Reorganized print() and summary() methods for cancor()
+o Smoothed out documentation
+o Added observation weights to cancor() methods
+o Added ability to plot X and or Y vectors in heplot.cancor()
+o Extended example of plot.cancor(), showing variable vectors for X & Y
+
 Version 0.6-1 (2013-1-23)
 o Continued development of methods and plots for canonical correlation analysis within the
   HE plot framework:

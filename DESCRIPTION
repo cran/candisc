@@ -2,8 +2,8 @@ Package: candisc
 Type: Package
 Title: Visualizing Generalized Canonical Discriminant and Canonical
         Correlation Analysis
-Version: 0.6-1
-Date: 2013-1-23
+Version: 0.6-2
+Date: 2013-1-30
 Depends: R (>= 2.10), car, heplots (>= 0.8.6), graphics, stats
 Suggests: rgl
 LazyLoad: yes
@@ -27,9 +27,9 @@ Description: This package includes functions for computing and
         of terms in an mlm via the plot.candisc and heplot.candisc
         methods.
 License: GPL (>= 2)
-Packaged: 2013-01-30 11:15:23 UTC; rforge
+Packaged: 2013-02-11 23:22:24 UTC; rforge
 Repository: CRAN
 Repository/R-Forge/Project: candisc
-Repository/R-Forge/Revision: 52
-Repository/R-Forge/DateTimeStamp: 2013-01-29 21:03:07
-Date/Publication: 2013-01-30 15:17:32
+Repository/R-Forge/Revision: 59
+Repository/R-Forge/DateTimeStamp: 2013-02-11 21:04:03
+Date/Publication: 2013-02-12 18:11:29

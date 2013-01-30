@@ -23,14 +23,14 @@ cancor(x, ...)
 
 \method{cancor}{formula}(formula, data, subset, weights, na.action, method = "gensvd", ...)
 
-\method{cancor}{default}(x, y, 
-	X.names = colnames(X), Y.names = colnames(Y), row.names = rownames(X), 
-	xcenter = TRUE, ycenter = TRUE, xscale = FALSE, yscale = FALSE, 
-	ndim = min(p, q), 
-	set.names = c("X", "Y"), 
-	prefix = c("Xcan", "Ycan"), 
-	use = "complete.obs",
-	method = "gensvd",
+\method{cancor}{default}(x, y, weights,
+    X.names = colnames(X), Y.names = colnames(Y), row.names = rownames(X), 
+    xcenter = TRUE, ycenter = TRUE, xscale = FALSE, yscale = FALSE, 
+    ndim = min(p, q), 
+    set.names = c("X", "Y"), 
+    prefix = c("Xcan", "Ycan"), 
+    use = "complete.obs",
+    method = "gensvd",
 	...
 	)
 
@@ -58,7 +58,10 @@ The data.frame within which the formula is evaluated
 an optional vector specifying a subset of observations to be used in the calculations.
 }
   \item{weights}{
-Observation weights.  [not yet implemented]
+Observation weights. If supplied, this must be a vector of length equal to the number of
+observations in X and Y, typically within [0,1].  In that case, the variance-covariance
+matrices are computed using \code{\link[stats]{cov.wt}}, and the number of observations
+is taken as the number of non-zero weights.
 }
   \item{na.action}{
 a function which indicates what should happen when the data contain NAs. 
@@ -168,7 +171,7 @@ but visualized here in canonical space.
 
 }
 \value{
-An object of class \code{cancorr}, a list with the following 9 components:
+An object of class \code{cancorr}, a list with the following components:
   \item{cancor}{Canonical correlations, i.e., the correlations between each canonical variate for
   the Y variables with the corresponding canonical variate for the X variables.}
   \item{names}{Names for various items, a list of 4 components: \code{X}, \code{Y}, \code{row.names}, \code{set.names}}
@@ -185,6 +188,7 @@ An object of class \code{cancorr}, a list with the following 9 components:
   }
   \item{X}{The matrix X}
   \item{Y}{The matrix Y}
+  \item{weights}{Observation weights, if supplied, else \code{NULL}}
 %  \item{structure}{Structure correlations, a list of 4 components: \code{X.xscores}, \code{Y.xscores}, \code{X.yscores}, \code{Y.yscores}}
   \item{structure}{Structure correlations ("loadings"), a list of 4 components: 
 	  \describe{
@@ -193,6 +197,8 @@ An object of class \code{cancorr}, a list with the following 9 components:
 	  \item{X.yscores}{Structure correlations of the X variables with the Ycan canonical scores}
 	  \item{Y.yscores}{Structure correlations of the Y variables with the Ycan canonical scores}
 	  }
+
+The formula method also returns components \code{call} and \code{terms}
   }
 }
 \references{
@@ -214,8 +220,8 @@ more flexible handling of missing data, other plot methods, ...
 
 \seealso{
 Other implementations of CCA: \code{\link[stats]{cancor}} (very basic), 
-\code{\link[yacca]{cca}} (fairly complete, but very messy return structure),
-\code{\link[CCA]{cc}} (fairly complete, very messy return structure, no longer maintained).
+\code{\link[yacca]{cca}} in the \pkg{yacca} (fairly complete, but very messy return structure),
+\code{\link[CCA]{cc}} in \pkg{CCA} (fairly complete, very messy return structure, no longer maintained).
 
 \code{\link{redundancy}}, for redundancy analysis;
 \code{\link{plot.cancor}}, for enhanced scatterplots of the canonical variates.
@@ -234,6 +240,33 @@ Y <- as.matrix(Rohwer[,3:5])   # the aptitude/ability variables
 
 (cc <- cancor(X, Y, set.names=c("PA", "Ability")))
 
+## Canonical correlation analysis of:
+##       5   PA  variables:  n, s, ns, na, ss 
+##   with        3   Ability  variables:  SAT, PPVT, Raven 
+## 
+##     CanR  CanRSQ   Eigen percent    cum                          scree
+## 1 0.6703 0.44934 0.81599   77.30  77.30 ******************************
+## 2 0.3837 0.14719 0.17260   16.35  93.65 ******                        
+## 3 0.2506 0.06282 0.06704    6.35 100.00 **                            
+## 
+## Test of H0: The canonical correlations in the 
+## current row and all that follow are zero
+## 
+##      CanR  WilksL      F df1   df2  p.value
+## 1 0.67033 0.44011 3.8961  15 168.8 0.000006
+## 2 0.38366 0.79923 1.8379   8 124.0 0.076076
+## 3 0.25065 0.93718 1.4078   3  63.0 0.248814
+
+
+# formula method
+cc <- cancor(cbind(SAT, PPVT, Raven) ~  n + s + ns + na + ss, data=Rohwer, 
+    set.names=c("PA", "Ability"))
+
+# using observation weights
+set.seed(12345)
+wts <- sample(0:1, size=nrow(Rohwer), replace=TRUE, prob=c(.05, .95))
+(ccw <- cancor(X, Y, set.names=c("PA", "Ability"), weights=wts) )
+
 # show correlations of the canonical scores 
 zapsmall(cor(scores(cc, type="x"), scores(cc, type="y")))
 
@@ -241,6 +274,23 @@ zapsmall(cor(scores(cc, type="x"), scores(cc, type="y")))
 coef(cc, type="both", standardize=TRUE)
 
 plot(cc, smooth=TRUE)
+
+##################
+data(schooldata)
+##################
+
+#fit the MMreg model
+school.mod <- lm(cbind(reading, mathematics, selfesteem) ~ 
+education + occupation + visit + counseling + teacher, data=schooldata)
+Anova(school.mod)
+pairs(school.mod)
+
+# canonical correlation analysis
+school.cc <- cancor(cbind(reading, mathematics, selfesteem) ~ 
+education + occupation + visit + counseling + teacher, data=schooldata)
+school.cc
+heplot(school.cc, xpd=TRUE, scale=0.3)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
