@@ -2,10 +2,10 @@ Package: candisc
 Type: Package
 Title: Visualizing Generalized Canonical Discriminant and Canonical
         Correlation Analysis
-Version: 0.6-2
-Date: 2013-1-30
+Version: 0.6-3
+Date: 2013-2-13
 Depends: R (>= 2.10), car, heplots (>= 0.8.6), graphics, stats
-Suggests: rgl
+Suggests: rgl, corrplot
 LazyLoad: yes
 LazyData: yes
 Authors@R: c(person(given = "Michael", family = "Friendly",
@@ -25,11 +25,13 @@ Description: This package includes functions for computing and
         computing canonical scores and vectors for each term. The
         graphic functions provide low-rank (1D, 2D, 3D) visualizations
         of terms in an mlm via the plot.candisc and heplot.candisc
-        methods.
+        methods. Related plots are now provided for canonical
+        correlation analysis when all predictors are quantitative.
 License: GPL (>= 2)
-Packaged: 2013-02-11 23:22:24 UTC; rforge
+Packaged: 2013-03-12 20:00:02 UTC; rforge
 Repository: CRAN
 Repository/R-Forge/Project: candisc
-Repository/R-Forge/Revision: 59
-Repository/R-Forge/DateTimeStamp: 2013-02-11 21:04:03
-Date/Publication: 2013-02-12 18:11:29
+Repository/R-Forge/Revision: 62
+Repository/R-Forge/DateTimeStamp: 2013-03-10 20:18:56
+Date/Publication: 2013-03-15 07:23:52
+NeedsCompilation: no
