@@ -67,12 +67,13 @@ Var <- function(x, na.rm = TRUE, use, weights) {
 # DONE:  add a method=argument
 # TODO:  should replace X, Y by x, y throughout to avoid another copy
 # DONE:  allow weights, by use of cov.wt() as in dataEllipse()
+# FIXED: row.names should refer to original x, because as.matrix() strips them
 
 cancor.default <- function (x, y, 
 		weights,
-		X.names = colnames(X),
-		Y.names = colnames(Y),
-		row.names = rownames(X),
+		X.names = colnames(x),
+		Y.names = colnames(y),
+		row.names = rownames(x),
 		xcenter = TRUE, ycenter = TRUE,    # not yet implemented (used implicitly)
 		xscale = FALSE, yscale = FALSE,    # not yet implemented
 		ndim=min(p,q),
@@ -198,7 +199,7 @@ stars <- function(p, width=30) {
 	reps <- round(p * width / max(p))
 	res1 <- sapply(reps, function(x) paste(rep('*', x), sep="", collapse=""))
 	res2 <- sapply(reps, function(x) paste(rep(' ', width-x), sep="", collapse=""))
-	res <- paste0(res1, res2)
+	res <- paste(res1, res2, sep="")
 	res
 }
 
