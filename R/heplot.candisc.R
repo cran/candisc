@@ -25,7 +25,6 @@
 # -- added sufix= to heplot.candisc and heplot3d.candisc
 # last revised: 11/12/2008 by MF
 # -- added asp= to heplot3d.candisc
-
 # last revised: 5/17/2012 9:41AM by MF
 # -- now use plot.candisc for a 1 df term
 # heplot.candisc now returns ellipses
@@ -86,23 +85,26 @@ heplot.candisc <- function (
   
   structure <- mod$structure[,which]
 
-	maxrms <- function(x) { max(sqrt(apply(x^2, 1, sum))) }
+  # DONE: replaced previous scaling with vecscale()
+#  maxrms <- function(x) { max(sqrt(apply(x^2, 1, sum))) }
 	if (missing(scale)) {
-		vecrange <- range(structure)
-		ellrange <- lapply(ellipses, range)
-		vecmax <- maxrms(structure)
-		ellmax <- max( maxrms(ellipses$E), unlist(lapply(ellipses$H, maxrms)) )
-		scale <- floor(  0.9 * ellmax / vecmax )
+#		vecrange <- range(structure)
+#		ellrange <- lapply(ellipses, range)
+#		vecmax <- maxrms(structure)
+#		ellmax <- max( maxrms(ellipses$E), unlist(lapply(ellipses$H, maxrms)) )
+#		scale <- floor(  0.9 * ellmax / vecmax )
+		scale <- vecscale(structure)
 		cat("Vector scale factor set to ", scale, "\n")
 	}
 
-  # TODO: replace with a call to vectors()
+  # DONE: replaced with a call to vectors(); but NB: can't pass ... to vectors()
   cs <- scale * structure
-  arrows(0, 0, cs[,1], cs[,2], length=.1, angle=15, col=var.col, lwd=var.lwd)
-  vars <- rownames(structure)
-  pos<-ifelse(cs[,1]>0, 4, 2)
-  text(cs[,1], cs[,2], vars, pos=pos,  col=var.col, cex=var.cex)
-
+#  arrows(0, 0, cs[,1], cs[,2], length=.1, angle=15, col=var.col, lwd=var.lwd)
+#  vars <- rownames(structure)
+#  pos<-ifelse(cs[,1]>0, 4, 2)
+#  text(cs[,1], cs[,2], vars, pos=pos,  col=var.col, cex=var.cex)
+  vectors(cs, col=var.col, cex=var.cex, lwd=var.lwd)
+  
   invisible(ellipses)
 }
 
@@ -119,7 +121,7 @@ heplot3d.candisc <- function (
 	asp="iso",           # aspect ratio, to ensure equal units
 	var.col="blue",
 	var.lwd=par("lwd"),
-	var.cex=par3d("cex"),
+	var.cex=rgl::par3d("cex"),
 	prefix = "Can",  # prefix for labels of canonical dimensions
 	suffix = FALSE,   # add label suffix with can % ?
 	terms=mod$term,  # terms to be plotted in canonical space / TRUE=all
@@ -158,7 +160,7 @@ heplot3d.candisc <- function (
 		ellrange <- lapply(ellipses, range)
 		vecmax <- maxrms(structure)
 		# get bbox of the 3d plot
-        bbox <- matrix(par3d("bbox"),3,2,byrow=TRUE)
+        bbox <- matrix(rgl::par3d("bbox"),3,2,byrow=TRUE)
 #    TODO: calculate scale so that vectors reasonably fill the plot
 		scale <- 5
 		cat("Vector scale factor set to ", scale, "\n")
@@ -167,14 +169,14 @@ heplot3d.candisc <- function (
   cs <- scale * mod$structure
   #  can this be simplified?
   for(i in 1:nrow(mod$structure)) {
-  	lines3d( c(0, cs[i,1]),
-  	         c(0, cs[i,2]),
-  	         c(0, cs[i,3]), col=var.col, lwd=var.lwd)
+  	rgl::lines3d( c(0, cs[i,1]),
+  	              c(0, cs[i,2]),
+  	              c(0, cs[i,3]), col=var.col, lwd=var.lwd)
   }
 #  rgl.texts( cs, text=rownames(cs), col=var.col)
-  texts3d( cs, texts=rownames(cs), col=var.col, cex=var.cex)
+  rgl::texts3d( cs, texts=rownames(cs), col=var.col, cex=var.cex)
 
-  if (!is.null(asp)) aspect3d(asp)
+  if (!is.null(asp)) rgl::aspect3d(asp)
   
   invisible(ellipses)
 }

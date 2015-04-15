@@ -1,9 +1,12 @@
 # last modified 6 October 2007 by J. Fox
 # last modified 22 April 2009 by M. Friendly
 
+import(car)
+
 import(heplots)
 export(candisc, candiscList, dataIndex,
-	cancor, vectors, Wilks, scores, redundancy)
+	cancor, vectors, Wilks, scores, redundancy, vecscale, can_lm)
+#S3method(can_lm, mlm)
 S3method(candisc, mlm)
 S3method(candiscList, mlm)
 S3method(coef, candisc)
