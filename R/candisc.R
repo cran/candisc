@@ -120,20 +120,23 @@ candisc.mlm <- function(mod, term, type="2", manova, ndim=rank, ...) {
 
 # print method for candisc objects
 
-print.candisc <- function( x, digits=max(getOption("digits") - 2, 3), ...) {
-	table <- canrsqTable(x)
-    cat(paste("\nCanonical Discriminant Analysis for ", x$term, ":\n\n", sep=""))
-    print(table, digits=digits,na.print = "")
-
-	rank <- x$rank
-    eigs <- x$eigenvalues[1:rank]
-    tests <- seqWilks(eigs, rank, x$dfh, x$dfe)
-    tests <- structure(as.data.frame(tests), 
-    heading = paste("\nTest of H0: The canonical correlations in the",
-                        "\ncurrent row and all that follow are zero\n") , 
-        class = c("anova", "data.frame"))
+print.candisc <- function( x, digits=max(getOption("digits") - 2, 3), LRtests=TRUE, ...) {
+  table <- canrsqTable(x)
+  cat(paste("\nCanonical Discriminant Analysis for ", x$term, ":\n\n", sep=""))
+  print(table, digits=digits,na.print = "")
+  
+  if (LRtests) {
+    # rank <- x$rank
+    # eigs <- x$eigenvalues[1:rank]
+    # tests <- seqWilks(eigs, rank, x$dfh, x$dfe)
+    # tests <- structure(as.data.frame(tests), 
+    #                    heading = paste("\nTest of H0: The canonical correlations in the",
+    #                                    "\ncurrent row and all that follow are zero\n") , 
+    #                    class = c("anova", "data.frame"))
+    tests <- Wilks(x)
     print(tests)
-    invisible(x)      
+  }
+  invisible(x)      
 }
 
 
@@ -160,6 +163,9 @@ canrsqTable <- function( obj ) {
 # See:
 #    http://www.gseis.ucla.edu/courses/ed231a1/notes2/can1.html
 #    http://www.gseis.ucla.edu/courses/ed231a1/notes3/manova.html
+# Now only on wayback machine:
+#    https://web.archive.org/web/20100205104138/http://www.gseis.ucla.edu/courses/ed231a1/notes2/can1.html
+#    https://web.archive.org/web/20090309033727/http://www.gseis.ucla.edu/courses/ed231a1/notes3/manova.html
 
 seqWilks <- function (eig, p, df.h, df.e) 
 {

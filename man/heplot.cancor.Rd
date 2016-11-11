@@ -21,7 +21,7 @@ effects in the space of the canonical Y variables selected by \code{which}.
 }
 
 \usage{
-\method{heplot}{cancor}(mod, which = 1:2, scale, asp=NA,
+\method{heplot}{cancor}(mod, which = 1:2, scale, asp=1,
     var.vectors = "Y", var.col = c("blue", "darkgreen"), var.lwd = par("lwd"), 
     var.cex = par("cex"), var.xpd = TRUE, 
     prefix = "Ycan", suffix = TRUE, terms = TRUE, ...)
@@ -147,7 +147,10 @@ heplot(cc, hypotheses=list("All X"=colnames(X)),
 	)
 
 # 3D version
-heplot3d(cc, var.lwd=3, var.col="red")	
+\dontrun{
+heplot3d(cc, var.lwd=3, var.col="red")
+}
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

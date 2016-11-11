@@ -1,3 +1,16 @@
+Changes in version 0.7-2 (2016-11-09)
+
+  o Add Wilks.candisc method;  this corrects a bug where the values of the stepdown tests for canonical discriminant analysis were calculated incorrectly [thx: Martina Vandebroek]
+  o Now use Wilks.candisc in print.candisc
+
+Changes in version 0.7-1 (2016-05-23)
+
+  o respect var.lwd in 2D plot.candisc()
+  o heplot.candisc() gets a rev.axes argument to reverse the axes and a var.pos argument to position  variable labels
+  o vectors() now produces nicer arrow head a la matlib::vectors()
+  o added var.pos argument to plot.candisc
+  o allow to suppress likelihood ratio tests in print.candisc
+  
 
 Changes in version 0.7-0 (2016-04-25)
 

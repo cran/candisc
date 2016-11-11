@@ -2,7 +2,6 @@
 \alias{Wine}
 \docType{data}
 \title{
-	R Documentation
 Chemical composition of three cultivars of wine 
 }
 \description{
@@ -39,7 +38,7 @@ etc.
 }
 \source{
 This data set was obtained from the UCI Machine Learning Repository,
-\url{http://archive.ics.uci.edu/ml/datasets/Wine}.
+\code{http://archive.ics.uci.edu/ml/datasets/Wine}.
 This page references a large number of papers that use this data set
 to compare different methods.
 }
