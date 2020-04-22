@@ -93,6 +93,16 @@ Friendly, M. (2007).
     \code{\link[heplots]{heplot}}, \code{\link[heplots]{heplot3d}}, \code{\link[rgl]{aspect3d}}}
 
 \examples{
+## Pottery data, from car package
+pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
+pottery.can <-candisc(pottery.mod)
+
+heplot(pottery.can, var.lwd=3)
+heplot3d(pottery.can, var.lwd=3, scale=10, zlim=c(-3,3), wire=FALSE)
+
+
+# reduce example for CRAN checks time
+\donttest{
 grass.mod <- lm(cbind(N1,N9,N27,N81,N243) ~ Block + Species, data=Grass)
 
 grass.can1 <-candisc(grass.mod, term="Species")
@@ -102,7 +112,6 @@ heplot(grass.can1, scale=6)
 heplot(grass.can1, scale=6, terms=TRUE)
 heplot(grass.canL, terms=TRUE, ask=FALSE)
 
-\donttest{ 
 heplot3d(grass.can1, wire=FALSE)
 # compare with non-iso scaling
 rgl::aspect3d(x=1,y=1,z=1)
@@ -110,19 +119,12 @@ rgl::aspect3d(x=1,y=1,z=1)
 # heplot3d(grass.can1, asp=NULL)
 }
 
-## Pottery data, from car package
-pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
-pottery.can <-candisc(pottery.mod)
+## Can't run this in example
+# rgl::play3d(rgl::spin3d(axis = c(1, 0, 0), rpm = 5), duration=12)
 
-heplot(pottery.can, var.lwd=3)
-heplot3d(pottery.can, var.lwd=3, scale=10, zlim=c(-3,3), wire=FALSE)
-
-\donttest{ 
-play3d(rgl::spin3d(axis = c(1, 0, 0), rpm = 5), duration=12)
-}
-
+# reduce example for CRAN checks time
+\donttest{
 ## FootHead data, from heplots package
-\dontrun{ 
 library(heplots)
 data(FootHead)
 
