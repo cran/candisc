@@ -19,6 +19,8 @@
 # --- added var.pos, same as in heplot.candisc
 # last revised: 10/03/2017 
 # --- fixed bug in use of pch and col (thx: dcarlson@tamu.edu)
+# last revised: 05/06/20
+# --- add points.1d option
 
 plot.candisc <- function (
 		x,		     # output object from candisc
@@ -40,7 +42,8 @@ plot.candisc <- function (
 		prefix = "Can",  # prefix for labels of canonical dimensions
 		suffix = TRUE,   # add label suffix with can % ?
 		titles.1d = c("Canonical scores", "Structure"),
-		...         # extra args passed to plot
+		points.1d = FALSE,
+		...         # extra args passed to plot, e.g., notch = TRUE for boxplot
 ) {
 	
 	term <- x$term
@@ -50,6 +53,7 @@ plot.candisc <- function (
 	nlev <- if(length(dim(x$means))>1) nrow(x$means) else length(x$means)     # number of groups
 	if (missing(col)) col <- rep(palette()[-1], length.out=nlev)
 	fill.col <- heplots::trans.colors(col, fill.alpha)
+	if (missing(pch)) pch <- rep(1:18, length.out=nlev)
 	
 	if (x$ndim < 2 || length(which)==1) {
 		which <- which[1]
@@ -62,7 +66,7 @@ plot.candisc <- function (
 		scores <- x$scores[, canvar]
 		
 		if(isTRUE(rev.axes[1])) {
-		  scores <- -scores
+		  x$scores[, canvar] <- -x$scores[, canvar]
 		  structure <- -structure
 		}
 		
@@ -70,13 +74,19 @@ plot.candisc <- function (
 		wid <- if (ns < 2*ng) c(2,1) else c(1.2,1)
 		#cat("ng:", ng, "\tns:", ns, "\twid:", wid, "\n")
 		layout(matrix(c(1,2),1,2), widths=wid)
+
 		par(mar=c(5,4,4,0)+.1)
 		if (is.logical(suffix) & suffix)
 			suffix <- paste( " (", round(x$pct[which],1), "%)", sep="" ) else suffix <- NULL
 		canlab <- paste(prefix, which, suffix, sep="")
 #		scores <- x$scores[,canvar]
-		formule <- formula( paste(canvar, " ~", term, sep="") )
+		formule <- formula( paste0(canvar, " ~", term) )
 		boxplot(formule, data=x$scores, ylab=canlab, xlab=term, col=fill.col, main=titles.1d[1], ...)
+    # add points?
+		if (points.1d) points(jitter(as.numeric(x$scores[, term]), factor=0.5), x$scores[,canvar], 
+		                      col=col[x$scores[, term]],
+		                      pch=pch[x$scores[, term]] )
+
 		xx <- 1:ns
 		par(mar=c(5,0,4,1)+.1)
 
@@ -110,7 +120,6 @@ plot.candisc <- function (
 	# TODO: can we be more clever about assigning default col & pch by taking the
 	# structure of x$factors into account?
 	if (missing(col)) col <- rep(palette(), length.out=nlev)
-	if (missing(pch)) pch <- rep(1:18, length.out=nlev)
 
 	scores <- x$scores[,canvar]
 	means <- x$means[,which]

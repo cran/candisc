@@ -2,8 +2,8 @@ Package: candisc
 Type: Package
 Title: Visualizing Generalized Canonical Discriminant and Canonical
         Correlation Analysis
-Version: 0.8-3
-Date: 2020-04-20
+Version: 0.8-5
+Date: 2021-01-21
 Depends: R (>= 3.5.0), car, heplots (>= 0.8-6), graphics, stats
 Suggests: rgl, corrplot, knitr, rmarkdown, MASS, rpart, rpart.plot
 LazyLoad: yes
@@ -25,9 +25,9 @@ Description: Functions for computing and visualizing
 	visualizations of terms in an 'mlm' via the 'plot.candisc' and 'heplot.candisc' methods. Related plots are
 	now provided for canonical correlation analysis when all predictors are quantitative.
 License: GPL (>= 2)
-Packaged: 2020-04-20 19:36:56 UTC; friendly
+Packaged: 2021-01-21 17:48:33 UTC; friendly
 VignetteBuilder: knitr
 BugReports: https://github.com/friendly/candisc/issues
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2020-04-22 12:02:05 UTC
+Date/Publication: 2021-01-22 16:30:03 UTC

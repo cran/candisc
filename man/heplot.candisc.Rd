@@ -79,7 +79,7 @@ range in \code{zlim} to \code{\link[heplots]{heplot3d}} usually helps.
 }
 
 \references{ 
-Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear Models: SAS Software and Examples Journal of Statistical Software, 17(6), 1-42. \url{http://www.jstatsoft.org/v17/i06/} 
+Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank Displays for Multivariate Linear Models: SAS Software and Examples Journal of Statistical Software, 17(6), 1-42. \url{https://www.jstatsoft.org/v17/i06/} 
 
 Friendly, M. (2007).
   HE plots for Multivariate General Linear Models.
@@ -98,14 +98,16 @@ pottery.mod <- lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)
 pottery.can <-candisc(pottery.mod)
 
 heplot(pottery.can, var.lwd=3)
+if(requireNamespace("rgl")){
 heplot3d(pottery.can, var.lwd=3, scale=10, zlim=c(-3,3), wire=FALSE)
+}
 
 
 # reduce example for CRAN checks time
 \donttest{
 grass.mod <- lm(cbind(N1,N9,N27,N81,N243) ~ Block + Species, data=Grass)
 
-grass.can1 <-candisc(grass.mod, term="Species")
+grass.can1 <-candisc(grass.mod,term="Species")
 grass.canL <-candiscList(grass.mod)
 
 heplot(grass.can1, scale=6)
