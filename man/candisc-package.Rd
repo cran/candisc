@@ -54,8 +54,8 @@ A more comprehensive collection of examples is contained in the vignette for the
 \tabular{ll}{
 Package: \tab candisc\cr
 Type: \tab Package\cr
-Version: \tab 0.8-5\cr
-Date: \tab 2021-01-21\cr
+Version: \tab 0.8-6\cr
+Date: \tab 2021-10-06\cr
 License: \tab GPL (>= 2)\cr
 }
 The organization of functions in this package and the \pkg{heplots} package
@@ -80,13 +80,14 @@ Effect Ordering for Data Displays,
 
 Friendly, M. & Sigal, M. (2014). Recent Advances in Visualizing Multivariate Linear Models. \emph{Revista Colombiana de Estadistica} , \bold{37}(2), 261-283. \doi{10.15446/rce.v37n2spe.47934}.
 
-Friendly, M. & Sigal, M. (2016). Graphical Methods for Multivariate Linear Models in Psychological Research: An R Tutorial, \emph{The Quantitative Methods for Psychology}, in press.
+Friendly, M. & Sigal, M. (2017). Graphical Methods for Multivariate Linear Models in Psychological Research: An R Tutorial, \emph{The Quantitative Methods for Psychology}, 13 (1), 20-45. \doi{10.20982/tqmp.13.1.p020}.
 
 Gittins, R. (1985). \emph{Canonical Analysis: A Review with Applications in Ecology},
 Berlin: Springer.
 
-
 }
+
+
 
 \keyword{ package }
 \keyword{multivariate}
