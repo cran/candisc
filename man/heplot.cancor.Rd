@@ -22,7 +22,7 @@
 )
 }
 \arguments{
-\item{mod}{A \code{cancor} object}
+\item{mod}{A \code{"cancor"} object, as computed by \code{\link[=cancor]{cancor()}}}
 
 \item{which}{A numeric vector containing the indices of the Y canonical
 dimensions to plot.}
@@ -33,7 +33,7 @@ approximately fill the plot window.}
 
 \item{asp}{aspect ratio setting. Use \code{asp=1} in 2D plots and
 \code{asp="iso"} in 3D plots to ensure equal units on the axes. Use
-\code{asp=NA} in 2D plots and \code{asp=NULL} in 3D plots to 
+\code{asp=NA} in 2D plots and \code{asp=NULL} in 3D plots to
 allow separate scaling for the axes. See Details below.}
 
 \item{var.vectors}{Which variable vectors to plot?  A character vector
@@ -57,7 +57,7 @@ apply to 3D plots.}
 each canonical dimension is added to the axis label.}
 
 \item{terms}{Terms for the X variables to be plotted in canonical space. The
- default, \code{terms=TRUE} or \code{terms="X"} plots H ellipses for all of
+default, \code{terms=TRUE} or \code{terms="X"} plots H ellipses for all of
 the X variables. \code{terms="Xcan"} plots H ellipses for all of the X
 canonical variables, \code{Xcan1}, \code{Xcan2}, \dots.}
 
@@ -67,8 +67,8 @@ particular, you can pass linear hypotheses among the term variables via
 }
 \value{
 Returns invisibly an object of class \code{"heplot"}, with
-      coordinates for the various hypothesis ellipses and the error ellipse, and
-      the limits of the horizontal and vertical axes.
+coordinates for the various hypothesis ellipses and the error ellipse, and
+the limits of the horizontal and vertical axes.
 }
 \description{
 Hypothesis - Error (HE) plots for canonical correlation analysis provide a new graphical method
@@ -84,9 +84,10 @@ the effects in the space of maximum canonical correlations, together with
 variable vectors representing the correlations of Y variables with the
 canonical dimensions.
 
-For consistency with \code{\link{heplot.candisc}}, the plots show effects in
+For consistency with \code{\link[=heplot.candisc]{heplot.candisc()}}, the plots show effects in
 the space of the canonical Y variables selected by \code{which}.
-
+}
+\details{
 The interpretation of variable vectors in these plots is different from that
 of the \code{terms} plotted as H "ellipses," which appear as degenerate
 lines in the plot (because they correspond to 1 df tests of rank(H)=1).
@@ -111,7 +112,7 @@ and labeling for the variables.
 Setting the aspect ratio of these plots is important for the proper
 interpretation of angles between the variable vectors and the coordinate
 axes.  However, this then makes it impossible to change the aspect ratio of
-the plot by re-sizing manually.
+the plot by re-sizing manually. You can override this using \code{asp=NA} in 2D plots
 }
 \examples{
 
@@ -148,12 +149,10 @@ Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979). \emph{Multivariate
 Analysis}. London: Academic Press.
 }
 \seealso{
-\code{\link{cancor}} for details on canonical correlation as
-      implemented here; 
-      \code{\link{plot.cancor}} for scatterplots of canonical 
-      variable scores.
-      \code{\link{heplot.candisc}}, \code{\link[heplots]{heplot}},
-      \code{\link[car]{linearHypothesis}}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{  [cancor()] for details on canonical correlation as implemented here; 
+  [plot.cancor()] for scatterplots of canonical  variable scores.
+  [heplot.candisc()], [heplots::heplot()], [car::linearHypothesis()]
+}\if{html}{\out{</div>}}
 }
 \author{
 Michael Friendly

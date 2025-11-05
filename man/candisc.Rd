@@ -7,6 +7,7 @@
 \alias{plot.candisc}
 \alias{print.candisc}
 \alias{summary.candisc}
+\alias{scores.candisc}
 \title{Canonical discriminant analysis}
 \usage{
 candisc(mod, ...)
@@ -26,6 +27,8 @@ candisc(mod, ...)
 )
 
 \method{coef}{candisc}(object, type = c("std", "raw", "structure"), ...)
+
+\method{scores}{candisc}(x, ...)
 
 \method{plot}{candisc}(
   x,
@@ -69,7 +72,7 @@ Normally, this is computed internally by \code{Anova(mod)}}
 
 \item{ndim}{Number of dimensions to store in (or retrieve from, for the
 \code{summary} method) the \code{means}, \code{structure}, \code{scores} and
-\code{coeffs.*} components.  
+\verb{coeffs.*} components.
 The default is the rank of the H matrix for the hypothesis term.}
 
 \item{digits}{significant digits to print.}
@@ -99,8 +102,7 @@ canonical means plotted in the \code{plot} method}
 \item{col}{A vector of the unique colors to be used for the levels of the
 term in the \code{plot} method, one for each level of the \code{term}.  In
 this version, you should assign colors and point symbols explicitly, rather
-than relying on the somewhat arbitrary defaults, based on
-\code{\link[grDevices]{palette}}}
+than relying on the somewhat arbitrary defaults, based on \code{\link[grDevices:palette]{grDevices::palette()}}.}
 
 \item{pch}{A vector of the unique point symbols to be used for the levels of
 the term in the \code{plot} method}
@@ -152,30 +154,30 @@ canonical dimension.}
 }
 \value{
 An object of class \code{candisc} with the following components:
-\item{dfh }{hypothesis degrees of freedom for \code{term}} 
-\item{dfe }{error degrees of freedom for the \code{mlm}} 
-\item{rank }{number of non-zero eigenvalues of \eqn{HE^{-1}}} 
-\item{eigenvalues }{eigenvalues of \eqn{HE^{-1}}} 
-\item{canrsq }{squared canonical correlations} 
+\item{dfh }{hypothesis degrees of freedom for \code{term}}
+\item{dfe }{error degrees of freedom for the \code{mlm}}
+\item{rank }{number of non-zero eigenvalues of \eqn{HE^{-1}}}
+\item{eigenvalues }{eigenvalues of \eqn{HE^{-1}}}
+\item{canrsq }{squared canonical correlations}
 \item{pct }{A vector containing the percentages of the \code{canrsq} of their total.}
 \item{ndim }{Number of canonical dimensions stored in the \code{means},
-     \code{structure} and \code{coeffs.*} components} 
-\item{means }{A data.frame containing the class means for the levels of the 
-     factor(s) in the term}
-\item{factors }{A data frame containing the levels of the factor(s) in the \code{term}} 
-\item{term }{name of the \code{term}} 
+\code{structure} and \verb{coeffs.*} components}
+\item{means }{A data.frame containing the class means for the levels of the
+factor(s) in the term}
+\item{factors }{A data frame containing the levels of the factor(s) in the \code{term}}
+\item{term }{name of the \code{term}}
 \item{terms }{A character vector containing the names of the terms in the
-     \code{mlm} object}
+\code{mlm} object}
 \item{coeffs.raw }{A matrix containing the raw canonical coefficients}
-\item{coeffs.std }{A matrix containing the standardized canonical coefficients} 
+\item{coeffs.std }{A matrix containing the standardized canonical coefficients}
 \item{structure }{A matrix containing the canonical structure
-    coefficients on \code{ndim} dimensions, i.e., the correlations between the
-    original variates and the canonical scores.  These are sometimes referred to
-    as Total Structure Coefficients.} 
+coefficients on \code{ndim} dimensions, i.e., the correlations between the
+original variates and the canonical scores.  These are sometimes referred to
+as Total Structure Coefficients.}
 \item{scores }{A data frame containing the
-    predictors in the \code{mlm} model and the canonical scores on \code{ndim}
-    dimensions.  These are calculated as \code{Y \%*\% coeffs.raw}, where \code{Y}
-    contains the standardized response variables.}
+predictors in the \code{mlm} model and the canonical scores on \code{ndim}
+dimensions.  These are calculated as \verb{Y \\\%*\\\% coeffs.raw}, where \code{Y}
+contains the standardized response variables.}
 }
 \description{
 \code{candisc} performs a generalized canonical discriminant analysis for
@@ -237,6 +239,8 @@ structure coefficients.
 
 \item \code{coef(candisc)}: \code{coef()} method for \code{"candisc"} objects.
 
+\item \code{scores(candisc)}: \code{scores()} method for \code{"candisc"} objects.
+
 \item \code{plot(candisc)}: \code{"plot"} method.
 
 }}
@@ -246,7 +250,9 @@ grass.mod <- lm(cbind(N1,N9,N27,N81,N243) ~ Block + Species, data=Grass)
 car::Anova(grass.mod, test="Wilks")
 
 grass.can1 <-candisc(grass.mod, term="Species")
-plot(grass.can1)
+print(grass.can1)
+
+plot(grass.can1, var.lwd = 2)
 
 # library(heplots)
 heplot(grass.can1, scale=6, fill=TRUE)
@@ -269,7 +275,7 @@ plot(iris.can1)
 }
 \references{
 Bartlett, M. S. (1938). Further aspects of the theory of
-multiple regression. Proc. Cambridge Philosophical Society \bold{34}, 33-34.
+multiple regression. Proc. Cambridge Philosophical Society \strong{34}, 33-34.
 
 Cooley, W.W. & Lohnes, P.R. (1971). Multivariate Data Analysis, New York:
 Wiley.
@@ -278,8 +284,7 @@ Gittins, R. (1985). Canonical Analysis: A Review with Applications in
 Ecology, Berlin: Springer.
 }
 \seealso{
-\code{\link{candiscList}}, \code{\link[heplots]{heplot}},
-\code{\link[heplots]{heplot3d}}
+\code{\link[=candiscList]{candiscList()}}, \code{\link[heplots:heplot]{heplots::heplot()}}, \code{\link[heplots:heplot3d]{heplots::heplot3d()}}
 }
 \author{
 Michael Friendly and John Fox

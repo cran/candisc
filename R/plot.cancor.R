@@ -26,36 +26,36 @@ default.arg <- function(args.list, arg, default){
 #' are peculiarities in the data that might threaten the validity of CCA. Point
 #' identification methods can be useful to determine influential cases.
 #' 
-#' @param x A \code{"cancor"} object
-#' @param which Which dimension to plot? An integer in \code{1:x$ndim}.
+#' @param x A `"cancor"` object
+#' @param which Which dimension to plot? An integer in `1:x$ndim`.
 #' @param xlim,ylim Limits for x and y axes
 #' @param xlab,ylab Labels for x and y axes.  If not specified, these are
-#'        constructed from the \code{set.names} component of \code{x}.
+#'        constructed from the `set.names` component of `x`.
 #' @param points logical.  Display the points?
 #' @param add logical.  Add to an existing plot?
 #' @param col Color for points.
 #' @param ellipse logical. Draw a data ellipse for the canonical scores?
 #' @param ellipse.args A list of arguments passed to
 #'        \code{\link[car]{dataEllipse}}. Internally, the function sets the default
-#'        value for \code{levels} to 0.68.
+#'        value for `levels` to 0.68.
 #' @param smooth logical. Draw a (loess) smoothed curve?
 #' @param smoother.args Arguments passed to \code{\link[car]{loessLine}}, which
 #'        should be consulted for details and defaults.
 #' @param col.smooth Color for the smoothed curve.
-#' @param abline logical. Draw the linear regression line for Ycan[,which] on
-#'        Xcan[,which]?
+#' @param abline logical. Draw the linear regression line for `Ycan[, which]` on
+#'        `Xcan[, which]`?
 #' @param col.lines Color for the linear regression line
 #' @param lwd Line widths
-#' @param labels Point labels for point identification via the \code{id.method}
+#' @param labels Point labels for point identification via the `id.method`
 #'        argument.
 #' @param id.method Method used to identify individual points. See
 #'        \code{\link[car]{showLabels}} for details.  The default, 
-#'        \code{id.method = "mahal"} identifies the \code{id.n} points furthest 
+#'        `id.method = "mahal"` identifies the `id.n` points furthest 
 #'        from the centroid.
 #' @param id.n Number of points to identify
 #' @param id.cex,id.col Character size and color for labeled points
-#' @param \dots Other arguments passed down to \code{plot(\dots)} and
-#'        \code{points(\dots)}
+#' @param \dots Other arguments passed down to `plot(\dots)` and
+#'        `points(\dots)`
 #' @return None.  Used for its side effect of producing a plot. %% ~Describe
 #'        the value returned 
 #' @author Michael Friendly
@@ -65,7 +65,7 @@ default.arg <- function(args.list, arg, default){
 #' \code{\link[car]{showLabels}}
 #' @references 
 #' Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979).
-#' \emph{Multivariate Analysis}. London: Academic Press.
+#' *Multivariate Analysis*. London: Academic Press.
 #' @keywords hplot
 #' @importFrom car dataEllipse showLabels loessLine
 #' @examples
@@ -105,12 +105,18 @@ default.arg <- function(args.list, arg, default){
 #' 
 #' 
 #' @export
-plot.cancor <- function(x, which=1, 
-		xlim, ylim, xlab, ylab,
-    points=TRUE, add=FALSE, col=palette()[1],
+plot.cancor <- function(x, 
+    which=1, 
+		xlim, ylim, 
+		xlab, ylab,
+    points=TRUE, 
+		add=FALSE, 
+		col=palette()[1],
 		ellipse = TRUE, ellipse.args = list(), 
     smooth=FALSE, smoother.args = list(), col.smooth=palette()[3],
-		abline=TRUE, col.lines = palette()[2], lwd=2,
+		abline=TRUE, 
+		col.lines = palette()[2], 
+		lwd=2,
 		labels=rownames(xy), 
 		id.method = "mahal", 
 		id.n = 0, id.cex = 1, id.col = palette()[1],

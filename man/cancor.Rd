@@ -49,7 +49,7 @@ this should be a matrix or data.frame whose columns contain the X variables}
 
 \item{\dots}{Other arguments, passed to methods}
 
-\item{formula}{A two-sided formula of the form \code{cbind(y1, y2, y3, \dots) ~ x1 + x2 + x3 + \dots}}
+\item{formula}{A two-sided formula of the form \verb{cbind(y1, y2, y3, \\dots) ~ x1 + x2 + x3 + \\dots}}
 
 \item{data}{The data.frame within which the formula is evaluated}
 
@@ -58,8 +58,8 @@ used in the calculations.}
 
 \item{weights}{Observation weights. If supplied, this must be a vector of
 length equal to the number of observations in X and Y, typically within
-[0,1].  In that case, the variance-covariance matrices are computed using
-\code{\link[stats]{cov.wt}}, and the number of observations is taken as the
+(0,1).  In that case, the variance-covariance matrices are computed using \link[stats:cov.wt]{stats::cov.wt},
+and the number of observations is taken as the
 number of non-zero weights.}
 
 \item{na.rm}{logical, determining whether observations with missing cases
@@ -76,9 +76,9 @@ columns contain the Y variables}
 
 \item{row.names}{Observation names in \code{x}, \code{y}}
 
-\item{xcenter, ycenter}{logical. Center the X, Y variables? [not yet implemented]}
+\item{xcenter, ycenter}{logical. Center the X, Y variables? (not yet implemented)}
 
-\item{xscale, yscale}{logical. Scale the X, Y variables to unit variance? [not yet implemented]}
+\item{xscale, yscale}{logical. Scale the X, Y variables to unit variance? (not yet implemented)}
 
 \item{ndim}{Number of canonical dimensions to retain in the result, for
 scores, coefficients, etc.}
@@ -108,60 +108,60 @@ variables.}
 }
 \value{
 An object of class \code{cancorr}, a list with the following
-       components: 
-   \item{cancor}{Canonical correlations, i.e., the correlations
-       between each canonical variate for the Y variables with the corresponding
-       canonical variate for the X variables.} 
-   \item{names}{Names for various
-       items, a list of 4 components: \code{X}, \code{Y}, \code{row.names}, \code{set.names}} 
-   \item{ndim}{Number of canonical dimensions extracted, \code{<= min(p,q)}} 
-   \item{dim}{Problem dimensions, a list of 3 components:
-         \code{p} (number of X variables), 
-         \code{q} (number of Y variables), 
-         \code{n} (sample size)} 
-    \item{coef}{Canonical coefficients, a list of 2 components: \code{X}, \code{Y}} 
-    \item{scores}{Canonical variate scores, a list of 2 components: \code{X}, \code{Y}} 
-    \item{scores}{Canonical variate scores, a list of 2 components: 
-     \describe{ 
-        \item{\code{X}}{Canonical variate scores for the X variables} 
-        \item{\code{Y}}{Canonical variate scores for the Y variables} } 
-        } 
-    \item{X}{The matrix X} 
-    \item{Y}{The matrix Y}
+components:
+\item{cancor}{Canonical correlations, i.e., the correlations
+between each canonical variate for the Y variables with the corresponding
+canonical variate for the X variables.}
+\item{names}{Names for various
+items, a list of 4 components: \code{X}, \code{Y}, \code{row.names}, \code{set.names}}
+\item{ndim}{Number of canonical dimensions extracted, \verb{<= min(p,q)}}
+\item{dim}{Problem dimensions, a list of 3 components:
+\code{p} (number of X variables),
+\code{q} (number of Y variables),
+\code{n} (sample size)}
+\item{coef}{Canonical coefficients, a list of 2 components: \code{X}, \code{Y}}
+\item{scores}{Canonical variate scores, a list of 2 components: \code{X}, \code{Y}}
+\item{scores}{Canonical variate scores, a list of 2 components:
+\describe{
+\item{\code{X}}{Canonical variate scores for the X variables}
+\item{\code{Y}}{Canonical variate scores for the Y variables} }
+}
+\item{X}{The matrix X}
+\item{Y}{The matrix Y}
 \item{weights}{Observation weights, if supplied, else \code{NULL}}
 \item{structure}{Structure correlations, a list of 4 components:
-    \code{X.xscores}, 
-    \code{Y.xscores}, 
-    \code{X.yscores}, 
-    \code{Y.yscores}}
+\code{X.xscores},
+\code{Y.xscores},
+\code{X.yscores},
+\code{Y.yscores}}
 
 \item{structure}{Structure correlations ("loadings"), a list of 4
-components: 
-  \describe{ 
-     \item{X.xscores}{Structure correlations of the X variables with the Xcan canonical scores} 
-     \item{Y.xscores}{Structure correlations of the Y variables with the Xcan canonical scores}
-     \item{X.yscores}{Structure correlations of the X variables with the Ycan canonical scores} 
-     \item{Y.yscores}{Structure correlations of the Y variables with the Ycan canonical scores} 
- }
+components:
+\describe{
+\item{X.xscores}{Structure correlations of the X variables with the Xcan canonical scores}
+\item{Y.xscores}{Structure correlations of the Y variables with the Xcan canonical scores}
+\item{X.yscores}{Structure correlations of the X variables with the Ycan canonical scores}
+\item{Y.yscores}{Structure correlations of the Y variables with the Ycan canonical scores}
+}
 
 The formula method also returns components \code{call} and \code{terms} }
 }
 \description{
 The function \code{cancor} generalizes and regularizes computation for
 canonical correlation analysis in a way conducive to visualization using
-methods in the \code{\link[heplots]{heplots}} package.
+methods in the \pkg{heplots} package.
 
 The package provides the following display, extractor and plotting methods for \code{"cancor"} objects
 \describe{
-   \item{\code{print(), summary()}}{Print and summarise the CCA}
-   \item{\code{coef()}}{Extract coefficients for X, Y, or both }
-   \item{\code{scores()}}{Extract observation scores on the canonical variables}
-   \item{\code{redundancy()}}{Redundancy analysis: proportion of variances of the
+\item{\verb{print(), summary()}}{Print and summarise the CCA}
+\item{\code{coef()}}{Extract coefficients for X, Y, or both }
+\item{\code{scores()}}{Extract observation scores on the canonical variables}
+\item{\code{redundancy()}}{Redundancy analysis: proportion of variances of the
 variables in each set (X and Y) accounted for by the variables in
 the other set through the canonical variates}
-   \item{\code{plot()}}{Plot pairs of canonical scores with a data ellipse and regression line}
-   \item{\code{heplot()}}{HE plot of the Y canonical variables showing effects of the X variables and projections
-         of the Y variables in this space.}
+\item{\code{plot()}}{Plot pairs of canonical scores with a data ellipse and regression line}
+\item{\code{heplot()}}{HE plot of the Y canonical variables showing effects of the X variables and projections
+of the Y variables in this space.}
 }
 
 As well, the function provides for observation weights, which may be useful in some situations, as well
@@ -171,7 +171,7 @@ as providing a basis for robust methods in which potential outliers can be down-
 Canonical correlation analysis (CCA), as traditionally presented is used to
 identify and measure the associations between two sets of quantitative
 variables, X and Y.  It is often used in the same situations for which a
-multivariate multiple regression analysis (MMRA) would be used.  
+multivariate multiple regression analysis (MMRA) would be used.
 
 However,
 CCA is is \dQuote{symmetric} in that the sets X and Y have equivalent
@@ -181,15 +181,15 @@ having maximal (canonical) correlations. On the other hand, MMRA is
 \emph{each one} to be explained by \emph{separate} linear combinations of
 the Xs.
 
-Let \eqn{\mathbf{Y}_{n \times p}} and \eqn{\mathbf{X}_{n \times q}} be two sets of variables over which 
-CCA is computed. We find canonical coefficients \eqn{\mathbf{A}_{p \times k}} and 
-\eqn{\mathbf{B}_{q \times k}, k=\min(p,q)} such that the canonical variables 
+Let \eqn{\mathbf{Y}_{n \times p}} and \eqn{\mathbf{X}_{n \times q}} be two sets of variables over which
+CCA is computed. We find canonical coefficients \eqn{\mathbf{A}_{p \times k}} and
+\eqn{\mathbf{B}_{q \times k}, k=\min(p,q)} such that the canonical variables
 \deqn{\mathbf{U}_{n \times k} = \mathbf{Y} \mathbf{A} \quad \text{and} \quad 
-      \mathbf{V}_{n \times k} = \mathbf{X} \mathbf{B}} 
+      \mathbf{V}_{n \times k} = \mathbf{X} \mathbf{B}}
 have maximal, diagonal correlation structure.
 That is, the coefficients \eqn{\mathbf{A}} and \eqn{\mathbf{B}} are chosen such that the (canonical)
 correlations between
-each pair \eqn{r_i = \text{cor}(\mathbf{u}_i, \mathbf{v}_i), i=1, 2, \dots , k} 
+each pair \eqn{r_i = \text{cor}(\mathbf{u}_i, \mathbf{v}_i), i=1, 2, \dots , k}
 are maximized and all other pairs are uncorrelated,
 \eqn{r_{ij} = \text{cor}(\mathbf{u}_i, \mathbf{v}_j) = 0,  i \ne j}.
 Thus, all correlations between the X and Y variables are channeled through the correlations between
@@ -199,7 +199,7 @@ For visualization using HE plots, it is most natural to consider
 plots representing the relations among the canonical variables for the Y
 variables in terms of a multivariate linear model predicting the Y canonical
 scores, using either the X variables or the X canonical scores as
-predictors.  Such plots, using \code{\link{heplot.cancor}} provide a
+predictors.  Such plots, using \code{\link[=heplot.cancor]{heplot.cancor()}}  provide a
 low-rank (1D, 2D, 3D) visualization of the relations between the two sets,
 and so are useful in cases when there are more than 2 or 3 variables in each
 of X and Y.
@@ -323,19 +323,18 @@ Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979). \emph{Multivariate
 Analysis}. London: Academic Press.
 }
 \seealso{
-Other implementations of CCA: \code{\link[stats]{cancor}} (very
-basic), \code{\link[yacca]{cca}} in the \pkg{yacca} (fairly complete, but
-very messy return structure), \code{\link[CCA]{cc}} in \pkg{CCA} (fairly
+Other implementations of CCA: \code{\link[stats:cancor]{stats::cancor()}} (very
+basic), \code{\link[yacca:cca]{yacca::cca()}} in the \pkg{yacca} (fairly complete, but
+very messy return structure), \code{\link[CCA:cc]{CCA::cc()}} in \pkg{CCA} (fairly
 complete, very messy return structure, no longer maintained).
 
-\code{\link{redundancy}}, for redundancy analysis;
-\code{\link{plot.cancor}}, for enhanced scatterplots of the canonical
-variates.
+\code{\link[=redundancy]{redundancy()}}, for redundancy analysis;
+\code{\link[=plot.cancor]{plot.cancor()}}, for enhanced scatterplots of the canonical variates.
 
-\code{\link{heplot.cancor}} for CCA HE plots and
-\code{\link[heplots]{heplots}} for generic heplot methods.
+\code{\link[=heplot.cancor]{heplot.cancor()}} for CCA HE plots and \code{\link[heplots:heplot]{heplots::heplot()}}
+for generic heplot methods.
 
-\code{\link{candisc}} for related methods focused on multivariate linear
+\code{\link[=candisc]{candisc()}} for related methods focused on multivariate linear
 models with one or more factors among the X variables.
 }
 \author{

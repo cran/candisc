@@ -11,6 +11,7 @@
   scale,
   asp = 1,
   var.col = "blue",
+  var.labels,
   var.lwd = par("lwd"),
   var.cex = par("cex"),
   var.pos,
@@ -40,6 +41,9 @@ plot as a circle (sphere) in canonical space.  For \code{heplot3d.candisc},
 use \code{asp=NULL} to suppress this transformation to iso-scaled axes.}
 
 \item{var.col}{Color for variable vectors and labels}
+
+\item{var.labels}{Labels for the variable vectors. The default is the rownames of the
+canonical structure coefficients.}
 
 \item{var.lwd}{Line width for variable vectors}
 
@@ -149,13 +153,13 @@ heplot(foot.can, main="Candisc HE plot",
 \references{
 Friendly, M. (2006). Data Ellipses, HE Plots and Reduced-Rank
 Displays for Multivariate Linear Models: SAS Software and Examples
-\emph{Journal of Statistical Software}, 17(6), 1-42.  %
+\emph{Journal of Statistical Software}, 17(6), 1-42.  \%
 \url{https://www.jstatsoft.org/v17/i06/}
 \doi{10.18637/jss.v017.i06}
 
-Friendly, M. (2007).  HE plots for Multivariate General Linear Models.  
+Friendly, M. (2007).  HE plots for Multivariate General Linear Models.
 \emph{Journal of Computational and Graphical Statistics},
-\bold{16}(2) 421--444.  \url{http://datavis.ca/papers/jcgs-heplots.pdf},
+\strong{16}(2) 421--444.  \url{http://datavis.ca/papers/jcgs-heplots.pdf},
 \doi{10.1198/106186007X208407}.
 }
 \seealso{

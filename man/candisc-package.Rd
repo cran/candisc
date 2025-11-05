@@ -19,13 +19,13 @@ MANOVA design and is equivalent to canonical correlation analysis between a
 set of quantitative response variables and a set of dummy variables coded
 from the factor variable. The \code{candisc} package generalizes this to
 multi-way MANOVA designs for all terms in a multivariate linear model (i.e.,
-an \code{mlm} object), computing canonical scores and vectors for each term
-(giving a \code{candiscList} object).
+an \code{"mlm"} object), computing canonical scores and vectors for each term
+(giving a \code{"candiscList"} object).
 
 The graphic functions are designed to provide low-rank (1D, 2D, 3D)
-visualizations of terms in a \code{mlm} via the \code{\link{plot.candisc}}
-method, and the HE plot \code{\link{heplot.candisc}} and
-\code{\link{heplot3d.candisc}} methods. For \code{mlm}s with more than a few
+visualizations of terms in a \code{mlm} via the \code{\link[=plot.candisc]{plot.candisc()}}
+method, and the HE plot \code{\link[=heplot.candisc]{heplot.candisc()}}  and
+\code{\link[=heplot3d.candisc]{heplot3d.candisc()}} methods. For \code{mlm}s with more than a few
 response variables, these methods often provide a much simpler
 interpretation of the nature of effects in canonical space than heplots for
 pairs of responses or an HE plot matrix of all responses in variable space.
@@ -34,15 +34,14 @@ Analogously, a multivariate linear (regression) model with quantitative
 predictors can also be represented in a reduced-rank space by means of a
 canonical correlation transformation of the Y and X variables to
 uncorrelated canonical variates, Ycan and Xcan.  Computation for this
-analysis is provided by \code{\link{cancor}} and related methods.
+analysis is provided by \code{\link[=cancor]{cancor()}} and related methods.
 Visualization of these results in canonical space are provided by the
-\code{\link{plot.cancor}}, \code{\link{heplot.cancor}} and
-\code{\link{heplot3d.cancor}} methods.
+\code{\link[=plot.cancor]{plot.cancor()}}, \code{\link[=heplot.cancor]{heplot.cancor()}} and \code{\link[=heplot3d.cancor]{heplot3d.cancor()}} methods.
 
 These relations among response variables in linear models can also be useful
 for \dQuote{effect ordering} (Friendly & Kwan (2003) for \emph{variables} in
 other multivariate data displays to make the displayed relationships more
-coherent.  The function \code{\link{varOrder}} implements a collection of
+coherent.  The function \code{\link[=varOrder]{varOrder()}} implements a collection of
 these methods.
 
 A new vignette, \code{vignette("diabetes", package="candisc")}, illustrates
@@ -55,18 +54,18 @@ The organization of functions in this package and the \pkg{heplots} package
 may change in a later version.
 }
 \references{
-Friendly, M. (2007).  HE plots for Multivariate General Linear Models.  
+Friendly, M. (2007).  HE plots for Multivariate General Linear Models.
 \emph{Journal of Computational and Graphical Statistics},
-\bold{16}(2) 421--444.  \url{http://datavis.ca/papers/jcgs-heplots.pdf},
+\strong{16}(2) 421--444.  \url{http://datavis.ca/papers/jcgs-heplots.pdf},
 \doi{10.1198/106186007X208407}.
 
 Friendly, M. & Kwan, E. (2003). Effect Ordering for Data Displays,
-\emph{Computational Statistics and Data Analysis}, \bold{43}, 509-539.
+\emph{Computational Statistics and Data Analysis}, \strong{43}, 509-539.
 \doi{10.1016/S0167-9473(02)00290-6}
 
 Friendly, M. & Sigal, M. (2014). Recent Advances in Visualizing Multivariate
-Linear Models. \emph{Revista Colombiana de Estadistica} , \bold{37}(2),
-261-283. 
+Linear Models. \emph{Revista Colombiana de Estadistica} , \strong{37}(2),
+261-283.
 \doi{10.15446/rce.v37n2spe.47934}.
 
 Friendly, M. & Sigal, M. (2017). Graphical Methods for Multivariate Linear
@@ -78,15 +77,15 @@ Gittins, R. (1985). \emph{Canonical Analysis: A Review with Applications in
 Ecology}, Berlin: Springer.
 }
 \seealso{
-\code{\link[heplots]{heplot}} for details about HE plots.
+\code{\link[heplots:heplot]{heplots::heplot()}} for details about HE plots.
 
-\code{\link{candisc}}, \code{\link{cancor}} for details about canonical
+\code{\link[=candisc]{candisc()}}, \code{\link[=cancor]{cancor()}} for details about canonical
 discriminant analysis and canonical correlation analysis.
 }
 \author{
 Michael Friendly and John Fox
 
-Maintainer: Michael Friendly <friendly@yorku.ca>
+Maintainer: Michael Friendly \href{mailto:friendly@yorku.ca}{friendly@yorku.ca}
 }
 \keyword{multivariate}
 \keyword{package}

@@ -1,6 +1,7 @@
 ## ----echo=FALSE---------------------------------------------------------------
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, 
-                      collapse=TRUE, R.options=list(digits=4))
+                      collapse=TRUE, R.options=list(digits=4),
+                      fig.align = "center")
 
 ## ----setup--------------------------------------------------------------------
 library(heplots)
@@ -11,25 +12,29 @@ library(car)
 data(Diabetes, package="heplots")
 str(Diabetes)
 
-## ----covEllipse, fig.height=5, fig.width=5------------------------------------
-covEllipses(Diabetes[,2:5], Diabetes$group, fill=TRUE, pooled=FALSE, 
-	col=c("blue", "red", "darkgreen"), variables=1:3)
+## ----covEllipse---------------------------------------------------------------
+covEllipses(Diabetes[,2:5], Diabetes$group, 
+	 variables=1:3,
+   fill=TRUE, fill.alpha = 0.2,
+   pooled=FALSE, 
+	 col=c("blue", "red", "darkgreen") 
+  )
 
-## ----scatter, fig.width=6, fig.height=5, echo=-1------------------------------
+## ----scatter, echo=-1---------------------------------------------------------
 op <- par(mar=c(4,4,0,1)+.5)
 scatterplot( instest ~ glutest | group, data=Diabetes, 
-             pch=c(16,15,17), 
-             col=c("blue", "red", "darkgreen"),
-             smooth=FALSE, 
-             grid=FALSE, 
-             legend=list(coords="topright"), 
-             lwd=2,
-             ellipse=list(levels=0.5))
+   pch=c(16,15,17), 
+   col=c("blue", "red", "darkgreen"),
+   smooth=FALSE, 
+   grid=FALSE, 
+   legend=list(coords="topright"), 
+   lwd=2,
+   ellipse=list(levels=0.5))
 
 ## ----scatter3d, eval=FALSE----------------------------------------------------
-#  scatter3d(sspg ~ glutest + instest | group, data=Diabetes,
-#            surface=FALSE,	sphere.size=1.5, ellipsoid=TRUE,
-#            surface.col=c("blue", "red", "darkgreen"))
+# scatter3d(sspg ~ glutest + instest | group, data=Diabetes,
+#           surface=FALSE,	sphere.size=1.5, ellipsoid=TRUE,
+#           surface.col=c("blue", "red", "darkgreen"))
 
 ## ----boxm, fig.width=7, fig.height=3------------------------------------------
 diab.boxm <- boxM(Diabetes[,2:5], Diabetes$group)
@@ -75,8 +80,8 @@ diab.part <- rpart(group ~ glufast + glutest + instest + sspg, data=Diabetes)
 diab.part
 
 ## ----rpart-plot, eval=FALSE---------------------------------------------------
-#  library(rpart.plot)
-#  rpart.plot(diab.part, box.palette=list("Blues", "Reds",  "Greens"))
+# library(rpart.plot)
+# rpart.plot(diab.part, box.palette=list("Blues", "Reds",  "Greens"))
 
 ## -----------------------------------------------------------------------------
 (class.pred <- table(predicted=predict(diab.part, type="class"), actual=Diabetes$group))
