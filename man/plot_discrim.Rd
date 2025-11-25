@@ -2,67 +2,236 @@
 % Please edit documentation in R/plot_discrim.R
 \name{plot_discrim}
 \alias{plot_discrim}
-\title{Create a discriminant analysis decision plot using ggplot.}
+\title{Discriminant Analysis Decision Plot using ggplot.}
 \usage{
 plot_discrim(
   model,
   vars,
-  data,
+  data = insight::get_data(model),
   resolution = 100,
-  contour = TRUE,
-  contour.color = "black",
   point.size = 3,
   showgrid = c("tile", "point", "none"),
+  contour = TRUE,
+  contour.color = "black",
+  tile.alpha = 0.2,
+  ellipse = FALSE,
+  ellipse.args = list(level = 0.68, linewidth = 1.2),
+  labels = FALSE,
+  labels.args = list(geom = "text", size = 5),
+  rev.axes = c(FALSE, FALSE),
+  xlim = NULL,
+  ylim = NULL,
   ...,
-  modes.means
+  other.levels
 )
 }
 \arguments{
 \item{model}{a discriminant analysis model object from \code{MASS::lda()} or \code{MASS::qda()}}
 
-\item{vars}{either a character vector of length 2 of the names of variables, or a formula of form V1 ~ V2 specifying y and x axis in the plot respectively.}
+\item{vars}{either a character vector of length 2 of the names of the \code{x} and \code{y} variables, or a formula of form \code{y ~ x}
+specifying the axes in the plot. Can include discriminant dimensions like \code{LD1}, \code{LD2}, etc.}
 
-\item{data}{data to use for visualization. Should contain all the data needed to use the model}
+\item{data}{data to use for visualization. Should contain all the data needed to use the \code{model} for prediction. The default is to use
+the data used to fit the \code{model}.}
 
-\item{resolution}{number of points in x, y variables to use for visualizating the predicted class boundaries and regions.}
-
-\item{contour}{logical; should the plot display the boundaries of the classes by contours?}
-
-\item{contour.color}{color of the lines for the contour boundaries}
+\item{resolution}{number of points in x, y variables to use for visualizing the predicted class boundaries and regions.}
 
 \item{point.size}{size of the plot symbols use to show the data observations}
 
 \item{showgrid}{a character string; how to display predicted class regions: \code{"tile"} for \code{\link[ggplot2:geom_tile]{ggplot2::geom_tile()}}, \code{"point"}
 for \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, or \code{"none"} for no grid display.}
 
+\item{contour}{logical (default: \code{TRUE}); should the plot display the boundaries of the classes by contours?}
+
+\item{contour.color}{color of the lines for the contour boundaries (default: \code{"black"})}
+
+\item{tile.alpha}{transparency value for the background tiles of predicted class.}
+
+\item{ellipse}{logical; if \code{TRUE}, 68 percent data ellipses for the groups are added to the plot.}
+
+\item{ellipse.args}{a named list of arguments passed to \code{\link[ggplot2:stat_ellipse]{ggplot2::stat_ellipse()}}. Common arguments include
+\code{level} (confidence level, default: 0.68), \code{linewidth} (line thickness, default: 1.2),
+\code{geom} (either \code{"path"} for unfilled ellipses or \code{"polygon"} for filled ellipses),
+and \code{alpha} (transparency for filled ellipses). Any valid argument to \code{stat_ellipse()} can be used.}
+
+\item{labels}{logical; if \code{TRUE}, class labels are added to the plot at the group means (default: \code{FALSE}).}
+
+\item{labels.args}{a named list of arguments passed to \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}}.
+Common arguments include \code{geom} (either \code{"text"} or \code{"label"}, default: \code{"text"}),
+\code{size} (text size, default: 5), \code{fontface} (e.g., \code{"bold"} or \code{"italic"}),
+\code{nudge_x} and \code{nudge_y} (position offsets), and \code{alpha} (transparency for label backgrounds).
+Any valid argument to \code{geom_text()} or \code{geom_label()} can be used.}
+
+\item{rev.axes}{a logical vector of length 2 controlling axis reversal for discriminant dimensions.
+\code{rev.axes[1] = TRUE} reverses the horizontal (x) axis; \code{rev.axes[2] = TRUE} reverses the
+vertical (y) axis. Only applies when plotting discriminant dimensions (e.g., \code{LD2 ~ LD1}).
+Default: \code{c(FALSE, FALSE)}.}
+
+\item{xlim, ylim}{numeric vectors of length 2 giving the axis limits. If \code{NULL} (default), uses the
+range of the variable in the data.}
+
 \item{...}{further parameters passed to \code{predict()}}
 
-\item{modes.means}{levels to use for evaluating predictions using the variables *\emph{not} specified in \code{vars}. If not specified, the function uses the means for quantitative variables, ...}
+\item{other.levels}{a named list specifying the fixed values to use for variables in the model that are
+\strong{not} included in \code{vars} (the non-focal variables). These values are held constant across
+the prediction grid. If not specified, the function uses sensible defaults: means for
+quantitative variables, and the first level for factors or character variables.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 Discriminant analysis can be more easily understood from plots of the data variables showing how observations are classified.
-\code{plot_discrim()} uses the ideas behind effect plots: Visualize predicted values for two focal variables over a
-grid, with other variables in a model held fixed.
+\code{plot_discrim()} uses the ideas behind \strong{effect plots} (Fox, 1987): Visualize predicted classes of the observations for two focal variables over a
+grid of their values, with other variables in a model held fixed. This differs from the usual effect plots in that the predicted
+values to be visualized are discrete categories rather than quantitative.
+
+In the case of discriminant analysis, the predicted values are class membership,
+so this can be visualized by mapping the categorical predicted class to discrete colors used as the background for the plot, or
+plotting the \strong{contours} of predicted class membership as lines (for \verb{[MASS::lda()]}) or qauadratic curves (for \verb{[MASS::qda()]}) in the plot.
+The predicted class of any observation in the space of the variables displayed can also be rendered as colored \strong{tiles} or \strong{points}
+in the background of the plot.
 }
 \details{
-In setting up this plot for \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}, this function maps color and shape of class-specific elements of the plot to the value of
-the class variable in the discriminant analysis. But it simply uses the ggplot defaults...
+Since \code{plot_discrim()} returns a \code{"ggplot"} object, you can easily customize colors and shapes by adding scale layers after
+the function call. You can also add other graphic layers, such as annotations, and control the overall appearance of
+plots using \code{\link[ggplot2:theme]{ggplot2::theme()}} components.
+
+\strong{Customizing colors and shapes}
+\itemize{
+\item Use \code{scale_color_manual()} \strong{and} \code{scale_fill_manual()} to control the colors used when using \code{showgrid = "tile"}, because that maps
+both \strong{both} \code{color} and \code{fill} to the group variable.
+\item Use \code{scale_shape_manual()} to control the symbols used for \code{geom_points()}
+}
+
+\strong{Customizing ellipses}
+
+The \code{ellipse.args} parameter provides fine control over the appearance of data ellipses. Common arguments include:
+\itemize{
+\item \code{level}: the confidence level for the ellipse (default: 0.68)
+\item \code{linewidth}: thickness of the ellipse line (default: 1.2)
+\item \code{geom}: either \code{"path"} for unfilled ellipses (default) or \code{"polygon"} for filled ellipses
+\item \code{alpha}: transparency when using \code{geom = "polygon"}
+}
+
+See \code{\link[ggplot2:stat_ellipse]{ggplot2::stat_ellipse()}} for additional parameters.
+
+\strong{Adding class labels}
+
+The \code{labels} and \code{labels.args} parameters allow you to add text labels for each class, positioned at the
+group means. Common arguments for \code{labels.args} include:
+\itemize{
+\item \code{geom}: either \code{"text"} (default) for simple text or \code{"label"} for text with a background box
+\item \code{size}: text size (default: 5)
+\item \code{fontface}: font style such as \code{"bold"} or \code{"italic"}
+\item \code{nudge_x}, \code{nudge_y}: offsets for label positioning
+\item \code{alpha}: transparency for label backgrounds when using \code{geom = "label"}
+}
+
+See \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} and \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} for additional parameters.
+
+\strong{Plotting in discriminant space}
+
+When \code{vars} specifies discriminant dimensions (e.g., \code{LD2 ~ LD1}), the function automatically:
+\enumerate{
+\item Calculates discriminant scores using \code{predict_discrim()}
+\item Creates a new LDA model in the discriminant space
+\item Plots the observations and decision boundaries in this transformed space
+}
+
+This is particularly useful for visualizing how well the discriminant dimensions separate the groups,
+since by construction the groups are maximally separated in discriminant space.
+
+\strong{Reversing discriminant axes}
+
+The orientation of discriminant axes (LD1, LD2, etc.) is arbitrary in the sense that multiplying
+any discriminant dimension by -1 does not change the discriminant solution or model fit. The \code{rev.axes}
+parameter allows you to reverse the direction of one or both axes when plotting in discriminant space.
+This can be useful for:
+\itemize{
+\item Aligning the discriminant plot with conventional interpretations (e.g., having "positive" on the right)
+\item Making the orientation consistent across different analyses or visualizations
+\item Improving the interpretability of the axes in relation to the original variables
+}
+
+The \code{rev.axes} parameter \strong{only affects plots of discriminant dimensions} (e.g., \code{LD2 ~ LD1}) and has no
+effect when plotting original observed variables. To reverse the horizontal axis (x-axis), set
+\code{rev.axes[1] = TRUE}; to reverse the vertical axis (y-axis), set \code{rev.axes[2] = TRUE}. Both axes
+can be reversed simultaneously with \code{rev.axes = c(TRUE, TRUE)}.
 }
 \examples{
 library(MASS)
 library(ggplot2)
 library(dplyr)
-library(candisc)
 
 iris.lda <- lda(Species ~ ., iris)
-plot_discrim(iris.lda, Petal.Length ~ Petal.Width, data=iris, showgrid = "tile")
+# formula call: y ~ x
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width)
+
+# add data ellipses
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             ellipse = TRUE) 
+
+# add filled ellipses with transparency
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             ellipse = TRUE,
+             ellipse.args = list(geom = "polygon", alpha = 0.2)) 
+
+# customize ellipse level and line thickness
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             ellipse = TRUE,
+             ellipse.args = list(level = 0.95, linewidth = 2)) 
+
+# without contours
+# data ellipses
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             contour = FALSE) 
+
+# specifying `vars` as character names for x, y
+plot_discrim(iris.lda, c("Petal.Width", "Petal.Length"))
+
+# Define custom colors and shapes, modify theme() and legend.position
+iris.colors <- c("red", "darkgreen", "blue")
+iris.pch <- 15:17
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width) +
+  scale_color_manual(values = iris.colors) +
+  scale_fill_manual(values = iris.colors) +
+  scale_shape_manual(values = iris.pch) +
+  theme_bw(base_size = 14) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(.8, .25))
+
+# Quadratic discriminant analysis gives quite a different result
+iris.qda <- qda(Species ~ ., iris)
+plot_discrim(iris.qda, Petal.Length ~ Petal.Width)
+
+# Add class labels, with custom styling
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             labels = TRUE,
+             labels.args = list(geom = "label", size = 6, fontface = "bold"))
+
+# Add labels with position adjustments
+plot_discrim(iris.lda, Petal.Length ~ Petal.Width, 
+             labels = TRUE,
+             labels.args = list(nudge_y = 0.1, size = 5))
+
+# Plot in discriminant space
+plot_discrim(iris.lda, LD2 ~ LD1)
+
+# Reverse the horizontal axis in discriminant space
+plot_discrim(iris.lda, LD2 ~ LD1, rev.axes = c(TRUE, FALSE))
+
+# Control axis limits
+plot_discrim(iris.lda, LD2 ~ LD1,
+             xlim = c(-10, 10), ylim = c(-8, 8))
+
 
 }
+\references{
+Fox, J. (1987). Effect Displays for Generalized Linear Models. In C. C. Clogg (Ed.), \emph{Sociological Methodology}, 1987 (pp. 347–361). Jossey-Bass
+}
 \seealso{
-\code{\link[klaR:partimat]{klaR::partimat()}}
+\code{\link[klaR:partimat]{klaR::partimat()}} for pairwise discriminant plots, but with little control of plot details
 }
 \author{
-Original code by Oliver on SO \url{https://stackoverflow.com/questions/63782598/quadratic-discriminant-analysis-qda-plot-in-r}. Generalized by Michael Friendly
+Original code by Oliver on SO \url{https://stackoverflow.com/questions/63782598/quadratic-discriminant-analysis-qda-plot-in-r}.
+
+Generalized by Michael Friendly
 }
