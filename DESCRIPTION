@@ -2,8 +2,8 @@ Package: candisc
 Type: Package
 Title: Visualizing Generalized Canonical Discriminant and Canonical
         Correlation Analysis
-Version: 1.1.0
-Date: 2025-11-18
+Version: 1.1.1
+Date: 2026-06-04
 Depends: R (>= 4.1.0), heplots (>= 0.8-6)
 Imports: car, graphics, stats, insight, dplyr, ggplot2, MASS
 Suggests: rgl, carData, corrplot, knitr, rmarkdown, rpart, rpart.plot,
@@ -41,12 +41,12 @@ VignetteBuilder: knitr
 URL: https://github.com/friendly/candisc/,
         https://friendly.github.io/candisc/
 BugReports: https://github.com/friendly/candisc/issues
-RoxygenNote: 7.3.3
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2025-11-24 19:07:29 UTC; friendly
+Packaged: 2026-06-04 18:54:40 UTC; friendly
 Author: Michael Friendly [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-3237-0941>),
   John Fox [aut] (ORCID: <https://orcid.org/0000-0002-1196-8012>)
 Repository: CRAN
-Date/Publication: 2025-11-25 06:10:54 UTC
+Date/Publication: 2026-06-05 05:10:27 UTC

@@ -93,7 +93,8 @@ NULL
 #' \item{`ss`}{Standardized social science (civics) score: a numeric vector} 
 #' }
 #' @references High School and Beyond data files:
-#' <http://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/7896>
+#' <https://www.datalumos.org/datalumos/project/235431/>
+#' 
 #' @source Tatsuoka, M. M. (1988).  Multivariate Analysis: Techniques for
 #' Educational and Psychological Research (2nd ed.). New York: Macmillan,
 #' Appendix F, 430-442.
@@ -375,12 +376,9 @@ NULL
 #' @seealso 
 #' [MASS::UScereal] has a similar dataset with fewer observations and variables, but with the variables normalized to a portion of one US cup.
 #' 
-#' <https://www.kaggle.com/datasets/crawford/80-cereals> Essentially the same dataset
-#' 
-#' @references 
-#' Jean Dos Santos, Breakfast Cereals: Data Analysis and Clustering, (Kaggle link doesn't work)
-#' Does a bunch of data cleaning
-#' and exploratory data analysis in R.
+#' @references
+#' Jean Dos Santos, Breakfast Cereals: Data Analysis and Clustering.
+#' Does a bunch of data cleaning and exploratory data analysis in R.
 #'
 #' @concept MMRA
 #' @concept cancor
